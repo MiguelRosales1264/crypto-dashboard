@@ -70,3 +70,50 @@ h1, h2, h3, h4, h5, h6 {
 #searchButton:active {
     transform: scale(0.75);
 }
+
+#cryptoHeaderDiv {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+}
+
+#cryptoDataDiv {
+    margin: 1rem;
+}
+
+.crypto-info {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    gap: 1rem;
+}
+
+.crypto-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.crypto-image {
+    width: 24px;
+    height: 24px;
+}
+
+.crypto-name {
+    font-size: 1rem;
+}
+
+.crypto-id {
+    font-size: 0.8rem;
+    color: gray;
+    text-transform: uppercase;
+}
+
+.crypto-stats {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+}
