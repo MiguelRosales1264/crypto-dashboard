@@ -42,8 +42,8 @@ async function displayCryptoData() {
 					<h2 class="crypto-name">${name}</h2>
 					<p class="crypto-id">${symbol.toUpperCase()}</p>
 				</td>
-				<td>$${current_price.toLocaleString()}</td>
-				<td class='price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
+				<td class='crypto-price'>$${current_price.toLocaleString()}</td>
+				<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
 			`;
 			if (price_change_percentage_24h < 0) {
 				cryptoInfoRow.querySelector('.price-change-24h').style.color = 'var(--negative-change-color)';

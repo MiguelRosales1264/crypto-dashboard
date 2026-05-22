@@ -76,14 +76,20 @@ h1, h2, h3, h4, h5, h6 {
 #cryptoDataTable {
     width: 100%;
     text-align: left;
-    margin: 1rem;
+    margin: 1rem 2rem;
     align-items: center;
+}
+
+.crypto-index {
+    width: 5%;
+    padding: 0.5rem 0;
 }
 
 .crypto-details {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 10px;
 }
 
 .crypto-image {
@@ -99,4 +105,14 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
     color: gray;
     text-transform: uppercase;
+}
+
+.crypto-price {
+    width: 30%;
+    padding: 10px;
+}
+
+.crypto-change {
+    width: 20%;
+    padding: 10px;
 }
