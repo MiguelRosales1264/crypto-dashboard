@@ -45,13 +45,12 @@ async function updateCryptoData() {
 function createCryptoHeaderRow() {
 	// Create a header row for the crypto data table
 	const cryptoHeaderRow = document.createElement('tr');
+	cryptoHeaderRow.id = 'cryptoHeaderRow'
 	cryptoHeaderRow.innerHTML = `
-		<tr id='cryptoHeaderRow'>
-			<th>#</th>
-			<th>Name</th>
-			<th>Price</th>
-			<th>24h</th>
-		</tr>
+		<th>#</th>
+		<th>Name</th>
+		<th>Price</th>
+		<th>24h</th>
 	`;
 	return cryptoHeaderRow
 }
