@@ -21,8 +21,10 @@ async function getAllCryptoData() {
 	}
 }
 
-async function displayCryptoData() {
-	// Fetch crypto data and display it in the table
+let refreshTimer;
+
+async function updateCryptoData() {
+	// Fetch crypto data and update it in the table
 	try {
 		const response = await getAllCryptoData();
 		createCryptoHeaderRow();
@@ -31,6 +33,9 @@ async function displayCryptoData() {
 			const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 			cryptoDataBody.appendChild(cryptoInfoRow); // Append the new row to the table body
 		});
+
+		clearTimeout(refreshTimer);
+		refreshTimer = setTimeout(updateCryptoData, 60 * 1000); // Refresh the data automatically every 60 seconds
 	} catch (error) {
 		console.error(error); // Handle errors gracefully, for now we just log them to the console
 	}
@@ -85,4 +90,4 @@ function createCryptoInfoRow(crypto, index) {
 	return cryptoInfoRow;
 }
 
-displayCryptoData();
+updateCryptoData();
