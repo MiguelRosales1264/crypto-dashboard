@@ -27,7 +27,9 @@ async function displayCryptoData() {
 		const response = await getAllCryptoData();
 		createCryptoHeaderRow();
 		response.forEach((crypto, index) => {
-			createCryptoInfoRow(crypto, index);
+			if (index >= 10) return; // Limit to top 10
+			const cryptoInfoRow = createCryptoInfoRow(crypto, index);
+			cryptoDataBody.appendChild(cryptoInfoRow); // Append the new row to the table body
 		});
 	} catch (error) {
 		console.error(error); // Handle errors gracefully, for now we just log them to the console
@@ -58,7 +60,6 @@ function createCryptoInfoRow(crypto, index) {
 		current_price,
 		price_change_percentage_24h,
 	} = crypto;
-	if (index >= 10) return; // Limit to top 10
 	// Create a new row for the crypto data
 	const cryptoInfoRow = document.createElement('tr');
 	cryptoInfoRow.classList.add('crypto-info');
@@ -81,7 +82,7 @@ function createCryptoInfoRow(crypto, index) {
 			'var(--positive-change-color)';
 	}
 
-	cryptoDataBody.appendChild(cryptoInfoRow); // Append the new row to the table body
+	return cryptoInfoRow;
 }
 
 displayCryptoData();
