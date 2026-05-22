@@ -43,8 +43,13 @@ async function displayCryptoData() {
 					<p class="crypto-id">${symbol.toUpperCase()}</p>
 				</td>
 				<td>$${current_price.toLocaleString()}</td>
-				<td>${price_change_percentage_24h.toFixed(2) * 100}%</td>
+				<td class='price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
 			`;
+			if (price_change_percentage_24h < 0) {
+				cryptoInfoRow.querySelector('.price-change-24h').style.color = 'var(--negative-change-color)';
+			} else {
+				cryptoInfoRow.querySelector('.price-change-24h').style.color = 'var(--positive-change-color)';
+			}
 
 			cryptoDataBody.appendChild(cryptoInfoRow);
 		});

@@ -1,6 +1,8 @@
 :root {
     --primary-color: #e5e5e5;
     --text-color: black;
+    --positive-change-color: green;
+    --negative-change-color: red;
 }
 
 * {
