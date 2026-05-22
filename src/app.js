@@ -27,7 +27,8 @@ async function updateCryptoData() {
 	// Fetch crypto data and update it in the table
 	try {
 		const response = await getAllCryptoData();
-		createCryptoHeaderRow();
+		const cryptoHeaderRow = createCryptoHeaderRow();
+		cryptoDataHeader.appendChild(cryptoHeaderRow); // Append the header row to the table header
 		response.forEach((crypto, index) => {
 			if (index >= 10) return; // Limit to top 10
 			const cryptoInfoRow = createCryptoInfoRow(crypto, index);
@@ -52,7 +53,7 @@ function createCryptoHeaderRow() {
 			<th>24h</th>
 		</tr>
 	`;
-	cryptoDataHeader.appendChild(cryptoHeaderRow); // Append the header row to the table header
+	return cryptoHeaderRow
 }
 
 function createCryptoInfoRow(crypto, index) {
