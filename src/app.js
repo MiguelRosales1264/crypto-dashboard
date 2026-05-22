@@ -34,7 +34,7 @@ async function updateCryptoData() {
 		});
 
 		clearTimeout(refreshTimer);
-		// refreshTimer = setTimeout(updateCryptoData, 60 * 1000); // Refresh the data automatically every 60 seconds
+		refreshTimer = setTimeout(updateCryptoData, 60 * 1000); // Refresh the data automatically every 60 seconds
 	} catch (error) {
 		console.error(error); // Handle errors gracefully, for now we just log them to the console
 	}
