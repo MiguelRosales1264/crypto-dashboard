@@ -2,7 +2,9 @@ const API_KEY = 'CG-yY8T2xc9QH1fkNFNpq4gbYw4';
 const API_URL = 'https://api.coingecko.com/api/v3/';
 
 // Variables
-const cryptoDataDiv = document.getElementById('cryptoDataDiv');
+const cryptoDataTable = document.getElementById('cryptoDataTable');
+const cryptoDataHeader = document.getElementById('cryptoDataHeader');
+const cryptoDataBody = document.getElementById('cryptoDataBody');
 
 async function getAllCryptoData() {
 	const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
@@ -20,7 +22,7 @@ async function getAllCryptoData() {
 async function displayCryptoData() {
 	try {
 		const response = await getAllCryptoData();
-		console.log(response[0]);
+		createCryptoHeaderRow();
 		response.forEach((crypto, index) => {
 			const {
 				id,
@@ -31,30 +33,37 @@ async function displayCryptoData() {
 				price_change_percentage_24h,
 			} = crypto;
 			if (index >= 10) return; // Limit to top 10
-			const cryptoInfoDiv = document.createElement('div');
-
-			cryptoInfoDiv.innerHTML = `
-				<div id="cryptoDataDiv">
-					<div class="crypto-info">
-						<p class="crypto-index">${index + 1}</p>
-						<div class='crypto-details'>
-							<img src='${image}' alt='${id}' class='crypto-image'>
-							<h2 class="crypto-name">${name}</h2>
-							<p class="crypto-id">${symbol}</p>
-						</div> 
-						<div class='crypto-stats'>
-							<p>Price: $${current_price} USD</p>
-							<p>24h Price Change: ${price_change_percentage_24h}% </p>
-						</div>
-					</div>
-				</div>
+			const cryptoInfoRow = document.createElement('tr');
+			cryptoInfoRow.classList.add('crypto-info');
+			cryptoInfoRow.innerHTML = `
+				<td class='crypto-index'>${index + 1}</td>
+				<td class='crypto-details'>
+					<img src="${image}" alt="${name} logo" class="crypto-image">
+					<h2 class="crypto-name">${name}</h2>
+					<p class="crypto-id">${symbol.toUpperCase()}</p>
+				</td>
+				<td>$${current_price.toLocaleString()}</td>
+				<td>${price_change_percentage_24h.toFixed(2) * 100}%</td>
 			`;
 
-			cryptoDataDiv.appendChild(cryptoInfoDiv);
-		})
+			cryptoDataBody.appendChild(cryptoInfoRow);
+		});
 	} catch (error) {
 		console.error(error);
 	}
+}
+
+function createCryptoHeaderRow() {
+	const cryptoHeaderRow = document.createElement('tr');
+	cryptoHeaderRow.innerHTML = `
+		<tr id='cryptoHeaderRow'>
+			<th>#</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>24h</th>
+		</tr>
+	`;
+	cryptoDataHeader.appendChild(cryptoHeaderRow);
 }
 
 displayCryptoData();
