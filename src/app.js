@@ -2,8 +2,13 @@ const API_KEY = 'CG-yY8T2xc9QH1fkNFNpq4gbYw4';
 const API_URL = 'https://api.coingecko.com/api/v3/';
 
 // Variables
+const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
+const cryptoDataLoadingState = document.getElementById(
+	'cryptoDataLoadingState',
+);
+let isLoading = true;
 
 async function getAllCryptoData() {
 	// Fetch crypto data from the CoinGecko API
@@ -11,13 +16,30 @@ async function getAllCryptoData() {
 
 	// Handle errors gracefully by using try-catch and returning an empty array if the fetch fails
 	try {
+		// isLoading = true;
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
 	} catch (error) {
 		console.error('Error fetching crypto data:', error); // Log the error to the console for debugging purposes
 		return [];
+	} finally {
+		// isLoading = false;
+		isLoadingState(isLoading);
 	}
+}
+
+function isLoadingState(isLoading) {
+	if (isLoading) {
+		console.log('loading...');
+		cryptoDataTable.style.display = 'none'
+		cryptoDataTable.innerHTML = ''
+		cryptoDataLoadingState.innerHTML = `
+			<h1 style='display: block;'>Loading...</h1>
+		`;
+	}
+	cryptoDataLoadingState.innerHTML = '';
+	return;
 }
 
 let refreshTimer;
@@ -74,4 +96,5 @@ function createCryptoInfoRow(crypto, index) {
 	return cryptoInfoRow;
 }
 
-updateCryptoData();
+isLoadingState(isLoading);
+// updateCryptoData();
