@@ -1,126 +1,153 @@
 :root {
-    --primary-color: #e5e5e5;
-    --text-color: black;
-    --positive-change-color: green;
-    --negative-change-color: red;
+	--primary-color: #e5e5e5;
+	--text-color: black;
+	--positive-change-color: green;
+	--negative-change-color: red;
 }
 
 * {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    word-spacing: -0.2em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	word-spacing: -0.2em;
 }
 
 #header {
-    background-color: var(--primary-color);
-    padding: .75rem 2rem;
-    display: flex;
-    justify-content: space-between;
+	background-color: var(--primary-color);
+	padding: 0.75rem 2rem;
+	display: flex;
+	justify-content: space-between;
 }
 
 .logo {
-    color: black;
-    text-decoration: none;  
-    justify-content: center;
-    align-items: center;
-    display: flex;
+	color: black;
+	text-decoration: none;
+	justify-content: center;
+	align-items: center;
+	display: flex;
 }
 
 .logo-image {
-    width: 30px;
-    height: 30px;
-    margin-right: 0.5rem;
+	width: 30px;
+	height: 30px;
+	margin-right: 0.5rem;
 }
 
 #searchDiv {
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 8px;
+	display: flex;
+	justify-content: center;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 8px;
 }
 
 #searchDiv:focus-within {
-    outline: 2px solid black;
+	outline: 2px solid black;
 }
 
 #searchInput {
-    border: none;
-    border-radius: 8px;
-    margin-left: 8px;
+	border: none;
+	border-radius: 8px;
+	margin-left: 8px;
 }
 
 #searchInput:focus-visible {
-    outline: none;
+	outline: none;
 }
 
 #searchButton {
-    background-color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    padding: 0.25rem 0.5rem;
-    transition: all 0.3s ease;
+	background-color: white;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	padding: 0.25rem 0.5rem;
+	transition: all 0.3s ease;
 }
 
 #searchButton:active {
-    transform: scale(0.75);
+	transform: scale(0.75);
 }
 
 #cryptoDataTable {
-    width: 100%;
-    text-align: left;
-    margin: 1rem 2rem;
-    align-items: center;
+	width: 100%;
+	text-align: left;
+	margin: 1rem 2rem;
+	align-items: center;
 }
 
 .crypto-index {
-    width: 5%;
-    padding: 0.5rem 0;
+	width: 5%;
+	padding: 0.5rem 0;
 }
 
 .crypto-details {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 10px;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 10px;
 }
 
 .crypto-image {
-    width: 24px;
-    height: 24px;
+	width: 24px;
+	height: 24px;
 }
 
 .crypto-name {
-    font-size: 1rem;
+	font-size: 1rem;
 }
 
 .crypto-id {
-    font-size: 0.9rem;
-    color: gray;
-    text-transform: uppercase;
+	font-size: 0.9rem;
+	color: gray;
+	text-transform: uppercase;
 }
 
 .crypto-price {
-    width: 30%;
-    padding: 10px;
+	width: 30%;
+	padding: 10px;
 }
 
 .crypto-change {
-    width: 20%;
-    padding: 10px;
+	width: 20%;
+	padding: 10px;
 }
 
-#loadingStateText {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    text-align: center;
-    margin-top: 2rem;
+.loadingStateText {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+    background-color: rgb(116, 167, 255);
+	padding: 0.75rem 1rem;
+	width: min(90%, 480px);
+	margin: 0;
+	border: 2px solid blue;
+	border-radius: 8px;
+	z-index: 10;
+}
+
+.errorMessage {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	background-color: rgb(255, 116, 116);
+	padding: 0.75rem 1rem;
+	width: min(90%, 480px);
+	margin: 0;
+	border: 2px solid red;
+	border-radius: 8px;
+	z-index: 10;
 }

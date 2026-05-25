@@ -5,41 +5,47 @@ const API_URL = 'https://api.coingecko.com/api/v3/';
 const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
-const cryptoDataLoadingState = document.getElementById(
-	'cryptoDataLoadingState',
-);
+const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
+const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let isLoading = true;
 
 async function getAllCryptoData() {
 	// Fetch crypto data from the CoinGecko API
-	const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
+	const url = `dddhttps://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
 
 	// Handle errors gracefully by using try-catch and returning an empty array if the fetch fails
 	try {
-		// isLoading = true;
+		isLoading = true;
+		isLoadingState(isLoading);
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
 	} catch (error) {
 		console.error('Error fetching crypto data:', error); // Log the error to the console for debugging purposes
+		cryptoDataErrorDiv.innerHTML = `
+			<div id='cryptoDataErrorDiv'>
+				<p class='errorMessage'>Oops! Something went wrong on our end.<br> Please come back later.</p>
+			</div>
+		`;
 		return [];
 	} finally {
-		// isLoading = false;
+		isLoading = false;
 		isLoadingState(isLoading);
 	}
 }
 
 function isLoadingState(isLoading) {
 	if (isLoading) {
-		console.log('loading...');
-		cryptoDataTable.style.display = 'none'
-		cryptoDataTable.innerHTML = ''
-		cryptoDataLoadingState.innerHTML = `
-			<p id='loadingStateText'>Loading...</p>
+		cryptoDataTable.style.display = 'none';
+		cryptoDataTable.innerHTML = '';
+		cryptoDataLoadingDiv.innerHTML = `
+			<div id='cryptoDataLoadingDiv'>
+				<p class='loadingStateText'>Loading...</p>
+			</div>
 		`;
 		return;
 	}
-	cryptoDataLoadingState.innerHTML = '';
+	cryptoDataLoadingDiv.innerHTML = '';
 	return;
 }
 
@@ -97,5 +103,5 @@ function createCryptoInfoRow(crypto, index) {
 	return cryptoInfoRow;
 }
 
-isLoadingState(isLoading);
-// updateCryptoData();
+// isLoadingState(isLoading);
+updateCryptoData();
