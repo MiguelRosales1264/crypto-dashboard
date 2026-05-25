@@ -11,7 +11,7 @@ let isLoading = true;
 
 async function getAllCryptoData() {
 	// Fetch crypto data from the CoinGecko API
-	const url = `dddhttps://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
+	const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
 
 	// Handle errors gracefully by using try-catch and returning an empty array if the fetch fails
 	try {
@@ -65,6 +65,11 @@ async function updateCryptoData() {
 		refreshTimer = setTimeout(updateCryptoData, 60 * 1000); // Refresh the data automatically every 60 seconds
 	} catch (error) {
 		console.error(error); // Handle errors gracefully, for now we just log them to the console
+		cryptoDataErrorDiv.innerHTML = `
+			<div id='cryptoDataErrorDiv'>
+				<p class='errorMessage'>Oops! Something went wrong.<br> Please come back later.</p>
+			</div>
+		`;
 	}
 }
 
