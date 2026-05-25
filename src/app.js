@@ -35,8 +35,9 @@ function isLoadingState(isLoading) {
 		cryptoDataTable.style.display = 'none'
 		cryptoDataTable.innerHTML = ''
 		cryptoDataLoadingState.innerHTML = `
-			<h1 style='display: block;'>Loading...</h1>
+			<p id='loadingStateText'>Loading...</p>
 		`;
+		return;
 	}
 	cryptoDataLoadingState.innerHTML = '';
 	return;
