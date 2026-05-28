@@ -10,8 +10,8 @@ let isLoading = true;
 
 async function getAllCryptoData() {
 	const currency = 'usd';
-	const perPage = 10;
-	const priceChangePercentage = '1h';
+	const perPage = '10';
+	const priceChangePercentage = '1h,24h,7d';
 	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
@@ -19,6 +19,7 @@ async function getAllCryptoData() {
 		isLoadingState(isLoading);
 		const response = await fetch(url);
 		const data = await response.json();
+		console.log('data fetched');
 		return data;
 	} catch (error) {
 		console.error('Error fetching crypto data:', error);
@@ -36,6 +37,7 @@ async function getAllCryptoData() {
 
 function isLoadingState(isLoading) {
 	if (isLoading) {
+		console.log('loading = true')
 		cryptoDataTable.style.display = 'none';
 		cryptoDataTable.innerHTML = '';
 		cryptoDataLoadingDiv.innerHTML = `
@@ -45,6 +47,7 @@ function isLoadingState(isLoading) {
 		`;
 		return;
 	}
+	console.log('loading = false');
 	cryptoDataLoadingDiv.innerHTML = '';
 	return;
 }
@@ -73,15 +76,6 @@ async function updateCryptoData() {
 }
 
 function getCryptoInfoRow(crypto, index) {
-	const {
-		id,
-		symbol,
-		name,
-		image,
-		current_price,
-		price_change_percentage_24h,
-	} = crypto;
-
 	const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 
 	if (price_change_percentage_24h < 0) {
@@ -96,6 +90,15 @@ function getCryptoInfoRow(crypto, index) {
 }
 
 function createCryptoInfoRow(crypto, index) {
+	const {
+		id,
+		symbol,
+		name,
+		image,
+		current_price,
+		price_change_percentage_24h,
+	} = crypto;
+	
 	const infoRow = document.createElement('tr');
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
@@ -112,4 +115,4 @@ function createCryptoInfoRow(crypto, index) {
 }
 
 // isLoadingState(isLoading);
-// updateCryptoData();
+updateCryptoData();
