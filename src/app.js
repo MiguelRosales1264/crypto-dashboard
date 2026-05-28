@@ -9,9 +9,10 @@ const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let isLoading = true;
 
 async function getAllCryptoData() {
-	const page = 1;
+	const currency = 'usd';
 	const perPage = 10;
-	const url = `${API_URL}coins/markets?vs_currency=usd&per_page=${pagePage}&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
+	const priceChangePercentage = '1h';
+	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
 		isLoading = true;
@@ -60,6 +61,7 @@ async function updateCryptoData() {
 
 		clearTimeout(refreshTimer);
 		refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
+		return;
 	} catch (error) {
 		console.error(error);
 		cryptoDataErrorDiv.innerHTML = `
@@ -93,7 +95,7 @@ function createCryptoInfoRow(crypto, index) {
 					<td class='crypto-price'>$${current_price.toLocaleString()}</td>
 					<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
 				`;
-	
+
 	// Set color based on price change
 	if (price_change_percentage_24h < 0) {
 		cryptoInfoRow.querySelector('.price-change-24h').style.color =
@@ -107,4 +109,4 @@ function createCryptoInfoRow(crypto, index) {
 }
 
 // isLoadingState(isLoading);
-// updateCryptoData();
+updateCryptoData();
