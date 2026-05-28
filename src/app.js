@@ -9,12 +9,10 @@ const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let isLoading = true;
 
 async function getAllCryptoData() {
-	// Fetch crypto data from the CoinGecko API
 	const page = 1;
 	const perPage = 10;
 	const url = `${API_URL}coins/markets?vs_currency=usd&per_page=${pagePage}&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
 
-	// Handle errors gracefully by using try-catch and returning an empty array if the fetch fails
 	try {
 		isLoading = true;
 		isLoadingState(isLoading);
@@ -22,7 +20,7 @@ async function getAllCryptoData() {
 		const data = await response.json();
 		return data;
 	} catch (error) {
-		console.error('Error fetching crypto data:', error); // Log the error to the console for debugging purposes
+		console.error('Error fetching crypto data:', error);
 		cryptoDataErrorDiv.innerHTML = `
 			<div id='cryptoDataErrorDiv'>
 				<p class='errorMessage'>Oops! Something went wrong on our end.<br> Please come back later.</p>
@@ -53,18 +51,17 @@ function isLoadingState(isLoading) {
 let refreshTimer;
 
 async function updateCryptoData() {
-	// Fetch crypto data and update it in the table
 	try {
 		const response = await getAllCryptoData();
 		response.forEach((crypto, index) => {
 			const cryptoInfoRow = createCryptoInfoRow(crypto, index);
-			cryptoDataBody.appendChild(cryptoInfoRow); // Append the new row to the table body
+			cryptoDataBody.appendChild(cryptoInfoRow);
 		});
 
 		clearTimeout(refreshTimer);
-		refreshTimer = setTimeout(updateCryptoData, 60 * 1000); // Refresh the data automatically every 60 seconds
+		refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
 	} catch (error) {
-		console.error(error); // Handle errors gracefully, for now we just log them to the console
+		console.error(error);
 		cryptoDataErrorDiv.innerHTML = `
 			<div id='cryptoDataErrorDiv'>
 				<p class='errorMessage'>Oops! Something went wrong.<br> Please come back later.</p>
@@ -74,7 +71,6 @@ async function updateCryptoData() {
 }
 
 function createCryptoInfoRow(crypto, index) {
-	// Destructure crypto data for easier access
 	const {
 		id,
 		symbol,
@@ -83,6 +79,7 @@ function createCryptoInfoRow(crypto, index) {
 		current_price,
 		price_change_percentage_24h,
 	} = crypto;
+
 	// Create a new row for the crypto data
 	const cryptoInfoRow = document.createElement('tr');
 	cryptoInfoRow.classList.add('crypto-info');
@@ -96,6 +93,7 @@ function createCryptoInfoRow(crypto, index) {
 					<td class='crypto-price'>$${current_price.toLocaleString()}</td>
 					<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
 				`;
+	
 	// Set color based on price change
 	if (price_change_percentage_24h < 0) {
 		cryptoInfoRow.querySelector('.price-change-24h').style.color =
