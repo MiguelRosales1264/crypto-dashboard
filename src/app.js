@@ -31,11 +31,10 @@ async function getCryptoData() {
 }
 
 function showErrorMessage(error, message) {
-	cryptoDataErrorDiv.innerHTML = `
-			<div id='cryptoDataErrorDiv'>
-				<p class='errorMessage'>${message}</p>
-			</div>
-		`;
+	setContainerContent(
+		cryptoDataErrorDiv,
+		`<p class='errorMessage'>${message}</p>`,
+	);
 }
 
 function toggleLoading(isLoading) {
@@ -48,16 +47,21 @@ function toggleLoading(isLoading) {
 
 function showLoading() {
 	cryptoDataTable.style.display = 'none';
-	cryptoDataLoadingDiv.innerHTML = `
-			<div id='cryptoDataLoadingDiv'>
-				<p class='loadingStateText'>Loading...</p>
-			</div>
-		`;
+	setContainerContent(
+		cryptoDataLoadingDiv,
+		'<p class="loadingStateText">Loading...</p>',
+	);
 }
 
 function showCryptoData() {
 	cryptoDataTable.style.display = 'block';
-	cryptoDataLoadingDiv.innerHTML = '';
+	setContainerContent(cryptoDataLoadingDiv, '');
+	setContainerContent(cryptoDataErrorDiv, '');
+}
+
+
+function setContainerContent(container, content) {
+	container.innerHTML = content;
 }
 
 async function updateCryptoData() {
