@@ -40,10 +40,10 @@ function setLoadingState(isLoading) {
 				<p class='loadingStateText'>Loading...</p>
 			</div>
 		`;
-		return;
+	} else {
+		cryptoDataTable.style.display = 'block';
+		cryptoDataLoadingDiv.innerHTML = '';
 	}
-	cryptoDataTable.style.display = 'block';
-	cryptoDataLoadingDiv.innerHTML = '';
 	return;
 }
 
