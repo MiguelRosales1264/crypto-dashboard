@@ -58,7 +58,7 @@ function showLoading() {
 		`;
 }
 
-function showCruptoTable() {
+function showCryptoTable() {
 	cryptoDataTable.style.display = 'block';
 	cryptoDataLoadingDiv.innerHTML = '';
 }
