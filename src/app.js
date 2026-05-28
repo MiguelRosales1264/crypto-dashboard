@@ -16,7 +16,7 @@ async function getCryptoData() {
 
 	try {
 		isLoading = true;
-		setLoadingState(isLoading);
+		toggleLoading(isLoading);
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
@@ -28,7 +28,7 @@ async function getCryptoData() {
 		return [];
 	} finally {
 		isLoading = false;
-		setLoadingState(isLoading);
+		toggleLoading(isLoading);
 	}
 }
 
@@ -41,7 +41,7 @@ function displayErrorMessage(error, message) {
 		`;
 }
 
-function setLoadingState(isLoading) {
+function toggleLoading(isLoading) {
 	if (isLoading) {
 		cryptoDataTable.style.display = 'none';
 		cryptoDataLoadingDiv.innerHTML = `
@@ -118,5 +118,5 @@ function createCryptoInfoRow(crypto, index) {
 	return infoRow;
 }
 
-// setLoadingState(isLoading);
+// toggleLoading(isLoading);
 updateCryptoData();
