@@ -19,7 +19,6 @@ async function getCryptoData() {
 		isLoadingState(isLoading);
 		const response = await fetch(url);
 		const data = await response.json();
-		console.log('data fetched');
 		return data;
 	} catch (error) {
 		console.error('Error fetching crypto data:', error);
@@ -37,7 +36,6 @@ async function getCryptoData() {
 
 function isLoadingState(isLoading) {
 	if (isLoading) {
-		console.log('loading = true')
 		cryptoDataTable.style.display = 'none';
 		cryptoDataLoadingDiv.innerHTML = `
 			<div id='cryptoDataLoadingDiv'>
@@ -46,7 +44,6 @@ function isLoadingState(isLoading) {
 		`;
 		return;
 	}
-	console.log('loading = false');
 	cryptoDataTable.style.display = 'block'
 	cryptoDataLoadingDiv.innerHTML = '';
 	return;
@@ -57,6 +54,7 @@ let refreshTimer;
 async function updateCryptoData() {
 	try {
 		const response = await getCryptoData();
+		cryptoDataBody.innerHTML = '';
 		response.forEach((crypto, index) => {
 			const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 			cryptoDataBody.appendChild(cryptoInfoRow);

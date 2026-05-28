@@ -79,10 +79,11 @@ h6 {
 }
 
 #cryptoDataTable {
-	width: 100%;
 	text-align: left;
 	margin: 1rem 2rem;
-	align-items: center;
+	display: grid;
+	place-items: center;
+	height: 100vh;
 }
 
 .crypto-index {
