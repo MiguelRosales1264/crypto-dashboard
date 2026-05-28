@@ -7,7 +7,6 @@ const cryptoDataBody = document.getElementById('cryptoDataBody');
 const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let refreshTimer;
-let isLoading = true;
 
 async function getCryptoData() {
 	const currency = 'usd';
@@ -16,8 +15,7 @@ async function getCryptoData() {
 	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
-		isLoading = true;
-		toggleLoading(isLoading);
+		toggleLoading(true);
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
@@ -28,8 +26,7 @@ async function getCryptoData() {
 		);
 		return [];
 	} finally {
-		isLoading = false;
-		toggleLoading(isLoading);
+		toggleLoading(false);
 	}
 }
 
@@ -43,7 +40,7 @@ function showErrorMessage(error, message) {
 
 function toggleLoading(isLoading) {
 	if (isLoading) {
-		showLoading()
+		showLoading();
 	} else {
 		showCryptoData();
 	}
@@ -67,7 +64,7 @@ async function updateCryptoData() {
 	try {
 		const response = await getCryptoData();
 		renderCryptoData(response);
-		resetCryptoTimer()
+		resetCryptoTimer();
 	} catch (error) {
 		showErrorMessage(
 			error,
@@ -129,5 +126,4 @@ function createCryptoInfoRow(crypto, index) {
 	return infoRow;
 }
 
-// toggleLoading(isLoading);
 updateCryptoData();
