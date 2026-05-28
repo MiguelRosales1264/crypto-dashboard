@@ -82,10 +82,8 @@ function getCryptoInfoRow(crypto, index) {
 		price_change_percentage_24h,
 	} = crypto;
 
-	// Create a new row for the crypto data
 	const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 
-	// Set color based on price change
 	if (price_change_percentage_24h < 0) {
 		cryptoInfoRow.querySelector('.price-change-24h').style.color =
 			'var(--negative-change-color)';
@@ -114,4 +112,4 @@ function createCryptoInfoRow(crypto, index) {
 }
 
 // isLoadingState(isLoading);
-updateCryptoData();
+// updateCryptoData();
