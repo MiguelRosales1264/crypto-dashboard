@@ -21,8 +21,8 @@ async function getCryptoData() {
 		const data = await response.json();
 		return data;
 	} catch (error) {
-		console.error('Error fetching crypto data:', error);
 		displayErrorMessage(
+			error,
 			'Oops! Something went wrong on our end.<br> Please come back later.',
 		);
 		return [];
@@ -32,7 +32,8 @@ async function getCryptoData() {
 	}
 }
 
-function displayErrorMessage(message) {
+function displayErrorMessage(error, message) {
+	console.log(error);
 	cryptoDataErrorDiv.innerHTML = `
 			<div id='cryptoDataErrorDiv'>
 				<p class='errorMessage'>${message}</p>
@@ -70,8 +71,8 @@ async function updateCryptoData() {
 		refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
 		return;
 	} catch (error) {
-		console.error(error);
 		displayErrorMessage(
+			error,
 			'Oops! Something went wrong.<br> Please come back later.',
 		);
 	}
