@@ -59,7 +59,6 @@ function showCryptoData() {
 	setContainerContent(cryptoDataErrorDiv, '');
 }
 
-
 function setContainerContent(container, content) {
 	container.innerHTML = content;
 }
