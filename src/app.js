@@ -55,7 +55,7 @@ async function updateCryptoData() {
 	try {
 		const response = await getAllCryptoData();
 		response.forEach((crypto, index) => {
-			const cryptoInfoRow = createCryptoInfoRow(crypto, index);
+			const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 			cryptoDataBody.appendChild(cryptoInfoRow);
 		});
 
@@ -72,7 +72,7 @@ async function updateCryptoData() {
 	}
 }
 
-function createCryptoInfoRow(crypto, index) {
+function getCryptoInfoRow(crypto, index) {
 	const {
 		id,
 		symbol,
@@ -83,18 +83,7 @@ function createCryptoInfoRow(crypto, index) {
 	} = crypto;
 
 	// Create a new row for the crypto data
-	const cryptoInfoRow = document.createElement('tr');
-	cryptoInfoRow.classList.add('crypto-info');
-	cryptoInfoRow.innerHTML = `
-					<td class='crypto-index'>${index + 1}</td>
-					<td class='crypto-details'>
-						<img src="${image}" alt="${name} logo" class="crypto-image">
-						<h2 class="crypto-name">${name}</h2>
-						<p class="crypto-id">${symbol.toUpperCase()}</p>
-					</td>
-					<td class='crypto-price'>$${current_price.toLocaleString()}</td>
-					<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
-				`;
+	const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 
 	// Set color based on price change
 	if (price_change_percentage_24h < 0) {
@@ -106,6 +95,22 @@ function createCryptoInfoRow(crypto, index) {
 	}
 
 	return cryptoInfoRow;
+}
+
+function createCryptoInfoRow(crypto, index) {
+	const infoRow = document.createElement('tr');
+	infoRow.classList.add('crypto-info');
+	infoRow.innerHTML = `
+					<td class='crypto-index'>${index + 1}</td>
+					<td class='crypto-details'>
+						<img src="${image}" alt="${name} logo" class="crypto-image">
+						<h2 class="crypto-name">${name}</h2>
+						<p class="crypto-id">${symbol.toUpperCase()}</p>
+					</td>
+					<td class='crypto-price'>$${current_price.toLocaleString()}</td>
+					<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
+				`;
+	return infoRow;
 }
 
 // isLoadingState(isLoading);
