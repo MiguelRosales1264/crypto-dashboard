@@ -22,11 +22,9 @@ async function getCryptoData() {
 		return data;
 	} catch (error) {
 		console.error('Error fetching crypto data:', error);
-		cryptoDataErrorDiv.innerHTML = `
-			<div id='cryptoDataErrorDiv'>
-				<p class='errorMessage'>Oops! Something went wrong on our end.<br> Please come back later.</p>
-			</div>
-		`;
+		displayErrorMessage(
+			'Oops! Something went wrong on our end.<br> Please come back later.',
+		);
 		return [];
 	} finally {
 		isLoading = false;
@@ -44,7 +42,7 @@ function isLoadingState(isLoading) {
 		`;
 		return;
 	}
-	cryptoDataTable.style.display = 'block'
+	cryptoDataTable.style.display = 'block';
 	cryptoDataLoadingDiv.innerHTML = '';
 	return;
 }
@@ -59,18 +57,24 @@ async function updateCryptoData() {
 			const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 			cryptoDataBody.appendChild(cryptoInfoRow);
 		});
-		
+
 		clearTimeout(refreshTimer);
 		refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
 		return;
 	} catch (error) {
 		console.error(error);
-		cryptoDataErrorDiv.innerHTML = `
+		displayErrorMessage(
+			'Oops! Something went wrong.<br> Please come back later.',
+		);
+	}
+}
+
+function displayErrorMessage(message) {
+	cryptoDataErrorDiv.innerHTML = `
 			<div id='cryptoDataErrorDiv'>
-				<p class='errorMessage'>Oops! Something went wrong.<br> Please come back later.</p>
+				<p class='errorMessage'>${message}</p>
 			</div>
 		`;
-	}
 }
 
 function getCryptoInfoRow(crypto, index) {
