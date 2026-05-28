@@ -32,6 +32,14 @@ async function getCryptoData() {
 	}
 }
 
+function displayErrorMessage(message) {
+	cryptoDataErrorDiv.innerHTML = `
+			<div id='cryptoDataErrorDiv'>
+				<p class='errorMessage'>${message}</p>
+			</div>
+		`;
+}
+
 function setLoadingState(isLoading) {
 	if (isLoading) {
 		cryptoDataTable.style.display = 'none';
@@ -67,14 +75,6 @@ async function updateCryptoData() {
 			'Oops! Something went wrong.<br> Please come back later.',
 		);
 	}
-}
-
-function displayErrorMessage(message) {
-	cryptoDataErrorDiv.innerHTML = `
-			<div id='cryptoDataErrorDiv'>
-				<p class='errorMessage'>${message}</p>
-			</div>
-		`;
 }
 
 function getCryptoInfoRow(crypto, index) {
