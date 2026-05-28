@@ -8,7 +8,7 @@ const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let isLoading = true;
 
-async function getAllCryptoData() {
+async function getCryptoData() {
 	const currency = 'usd';
 	const perPage = '10';
 	const priceChangePercentage = '1h,24h,7d';
@@ -39,7 +39,6 @@ function isLoadingState(isLoading) {
 	if (isLoading) {
 		console.log('loading = true')
 		cryptoDataTable.style.display = 'none';
-		cryptoDataTable.innerHTML = '';
 		cryptoDataLoadingDiv.innerHTML = `
 			<div id='cryptoDataLoadingDiv'>
 				<p class='loadingStateText'>Loading...</p>
@@ -48,6 +47,7 @@ function isLoadingState(isLoading) {
 		return;
 	}
 	console.log('loading = false');
+	cryptoDataTable.style.display = 'block'
 	cryptoDataLoadingDiv.innerHTML = '';
 	return;
 }
@@ -56,12 +56,12 @@ let refreshTimer;
 
 async function updateCryptoData() {
 	try {
-		const response = await getAllCryptoData();
+		const response = await getCryptoData();
 		response.forEach((crypto, index) => {
 			const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 			cryptoDataBody.appendChild(cryptoInfoRow);
 		});
-
+		
 		clearTimeout(refreshTimer);
 		refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
 		return;
@@ -76,6 +76,7 @@ async function updateCryptoData() {
 }
 
 function getCryptoInfoRow(crypto, index) {
+	const { price_change_percentage_24h } = crypto;
 	const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 
 	if (price_change_percentage_24h < 0) {
@@ -98,7 +99,7 @@ function createCryptoInfoRow(crypto, index) {
 		current_price,
 		price_change_percentage_24h,
 	} = crypto;
-	
+
 	const infoRow = document.createElement('tr');
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
