@@ -1,7 +1,6 @@
 const API_KEY = 'CG-yY8T2xc9QH1fkNFNpq4gbYw4';
 const API_URL = 'https://api.coingecko.com/api/v3/';
 
-// Variables
 const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
@@ -11,7 +10,9 @@ let isLoading = true;
 
 async function getAllCryptoData() {
 	// Fetch crypto data from the CoinGecko API
-	const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
+	const page = 1;
+	const perPage = 10;
+	const url = `${API_URL}coins/markets?vs_currency=usd&per_page=${pagePage}&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&x_cg_demo_api_key=${API_KEY}`;
 
 	// Handle errors gracefully by using try-catch and returning an empty array if the fetch fails
 	try {
@@ -56,7 +57,6 @@ async function updateCryptoData() {
 	try {
 		const response = await getAllCryptoData();
 		response.forEach((crypto, index) => {
-			if (index >= 10) return; // Limit to top 10
 			const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 			cryptoDataBody.appendChild(cryptoInfoRow); // Append the new row to the table body
 		});
@@ -109,4 +109,4 @@ function createCryptoInfoRow(crypto, index) {
 }
 
 // isLoadingState(isLoading);
-updateCryptoData();
+// updateCryptoData();
