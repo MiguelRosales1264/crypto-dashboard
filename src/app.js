@@ -6,6 +6,7 @@ const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
 const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
+let refreshTimer;
 let isLoading = true;
 
 async function getCryptoData() {
@@ -46,7 +47,6 @@ function toggleLoading(isLoading) {
 	} else {
 		showCryptoData();
 	}
-	return;
 }
 
 function showLoading() {
@@ -63,26 +63,30 @@ function showCryptoData() {
 	cryptoDataLoadingDiv.innerHTML = '';
 }
 
-let refreshTimer;
-
 async function updateCryptoData() {
 	try {
 		const response = await getCryptoData();
-		cryptoDataBody.innerHTML = '';
-		response.forEach((crypto, index) => {
-			const cryptoInfoRow = getCryptoInfoRow(crypto, index);
-			cryptoDataBody.appendChild(cryptoInfoRow);
-		});
-
-		clearTimeout(refreshTimer);
-		refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
-		return;
+		renderCryptoData(response);
+		resetCryptoTimer()
 	} catch (error) {
 		displayErrorMessage(
 			error,
 			'Oops! Something went wrong.<br> Please come back later.',
 		);
 	}
+}
+
+function renderCryptoData(response) {
+	cryptoDataBody.innerHTML = '';
+	response.forEach((crypto, index) => {
+		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
+		cryptoDataBody.appendChild(cryptoInfoRow);
+	});
+}
+
+function resetCryptoTimer() {
+	clearTimeout(refreshTimer);
+	refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
 }
 
 function getCryptoInfoRow(crypto, index) {
