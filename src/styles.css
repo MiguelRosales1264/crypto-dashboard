@@ -3,6 +3,10 @@
 	--text-color: black;
 	--positive-change-color: green;
 	--negative-change-color: red;
+	--loading-light: rgb(116, 167, 255);
+	--loading-dark: blue;
+	--error-light: rgb(255, 116, 116);
+	--error-dark: red;
 }
 
 * {
@@ -86,6 +90,11 @@ h6 {
 	height: 100vh;
 }
 
+th,
+td {
+	border-bottom: 1px solid gray;
+}
+
 .crypto-index {
 	width: 5%;
 	padding: 0.5rem 0;
@@ -129,11 +138,11 @@ h6 {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
-    background-color: rgb(116, 167, 255);
+	background-color: var(--loading-light);
 	padding: 0.75rem 1rem;
 	width: min(90%, 480px);
 	margin: 0;
-	border: 2px solid blue;
+	border: 2px solid var(--loading-dark);
 	border-radius: 8px;
 	z-index: 10;
 }
@@ -144,11 +153,11 @@ h6 {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
-	background-color: rgb(255, 116, 116);
+	background-color: var(--error-light);
 	padding: 0.75rem 1rem;
 	width: min(90%, 480px);
 	margin: 0;
-	border: 2px solid red;
+	border: 2px solid var(error-dark);
 	border-radius: 8px;
 	z-index: 10;
 }
