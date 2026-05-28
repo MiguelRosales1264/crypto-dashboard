@@ -33,7 +33,6 @@ async function getCryptoData() {
 }
 
 function displayErrorMessage(error, message) {
-	console.log(error);
 	cryptoDataErrorDiv.innerHTML = `
 			<div id='cryptoDataErrorDiv'>
 				<p class='errorMessage'>${message}</p>
@@ -43,17 +42,25 @@ function displayErrorMessage(error, message) {
 
 function toggleLoading(isLoading) {
 	if (isLoading) {
-		cryptoDataTable.style.display = 'none';
-		cryptoDataLoadingDiv.innerHTML = `
+		showLoading()
+	} else {
+		showCryptoData();
+	}
+	return;
+}
+
+function showLoading() {
+	cryptoDataTable.style.display = 'none';
+	cryptoDataLoadingDiv.innerHTML = `
 			<div id='cryptoDataLoadingDiv'>
 				<p class='loadingStateText'>Loading...</p>
 			</div>
 		`;
-	} else {
-		cryptoDataTable.style.display = 'block';
-		cryptoDataLoadingDiv.innerHTML = '';
-	}
-	return;
+}
+
+function showCruptoTable() {
+	cryptoDataTable.style.display = 'block';
+	cryptoDataLoadingDiv.innerHTML = '';
 }
 
 let refreshTimer;
