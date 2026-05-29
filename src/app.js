@@ -8,6 +8,11 @@ const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let refreshTimer;
 
+const pagesData = [
+	{ id: 'home', title: 'Home | Crypto Dashboard', content: '' },
+	{ id: 'btc', title: 'Bitcoin', content: 'bitcoin page' },
+]
+
 async function getCryptoData() {
 	const currency = 'usd';
 	const perPage = '10';
