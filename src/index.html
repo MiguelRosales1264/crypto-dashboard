@@ -9,19 +9,20 @@
     <script src="app.js" defer></script>
 </head>
 <body>
-    <main id="main-container">
-        <div id="crypto-dashboard-container">
-            <div id="header">
-                <div id="logoHeader" class="logo">
-                    <img src="images/stackbit.svg" alt="logo" class="logo-image">
-                    <h3>Crypto Dashboard</h3>
-                </div>
-                <div id="searchDiv">
-                    <input type="text" id="searchInput" placeholder="Search">
-                    <button id="searchButton">🔍</button>
-                </div>
+    <header id="headerContainer">
+        <div id="header">
+            <div id="logoHeader" class="logo">
+                <img src="images/stackbit.svg" alt="logo" class="logo-image">
+                <h3>Crypto Dashboard</h3>
             </div>
-        
+            <div id="searchDiv">
+                <input type="text" id="searchInput" placeholder="Search">
+                <button id="searchButton">🔍</button>
+            </div>
+        </div>
+    </header>
+    <main id="mainContainer">
+        <div id="cryptoDataContainer">
             <div id="cryptoDataContainer">
                 <div id="cryptoDataLoadingDiv"></div>
                 <div id="cryptoDataErrorDiv"></div>
@@ -38,14 +39,14 @@
                 </table>
             </div>
         </div>
-        <div id="coins-page-container">
-            <h1>Coin Page</h1>
-        <div>
-            <img src="${image}" alt="${name} logo" class="crypto-image">
-            <h3>${name} ${symbol.toUpperCase()} Price ${index + 1}</h3>
-        </div>
-        <h1>$${current_price.toLocaleString()}</h1>
-        <p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)} (24h)</p>
+        <div id="coinPagesContainer" style="display: none;">
+        <!-- <h1>Coin Page</h1>
+            <div>
+                <img src="${image}" alt="${name} logo" class="crypto-image">
+                <h3>${name} ${symbol.toUpperCase()} Price ${index + 1}</h3>
+            </div>
+            <h1>$${current_price.toLocaleString()}</h1>
+            <p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)} (24h)</p> -->
         </div>
     </main>
 </body>

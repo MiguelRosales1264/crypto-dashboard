@@ -1,17 +1,14 @@
 const API_KEY = 'CG-yY8T2xc9QH1fkNFNpq4gbYw4';
 const API_URL = 'https://api.coingecko.com/api/v3/';
 
+const cryptoDashboardContainer = document.getElementById('cryptoDataContainer');
+const coinPagesContainer = document.getElementById('coinPagesContainer');
 const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
 const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 let refreshTimer;
-
-const pagesData = [
-	{ id: 'home', title: 'Home | Crypto Dashboard', content: '' },
-	{ id: 'btc', title: 'Bitcoin', content: 'bitcoin page' },
-]
 
 async function getCryptoData() {
 	const currency = 'usd';
@@ -132,6 +129,14 @@ function createCryptoInfoRow(crypto, index) {
 					<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
 				`;
 	return infoRow;
+}
+
+function renderCoinPage() {
+	cryptoDashboardContainer.style.display = 'none';
+	coinPagesContainer.style.display = 'block';
+	coinPagesContainer.innerHTML = `
+		<h1>Coin Page</h1>
+	`;
 }
 
 updateCryptoData();
