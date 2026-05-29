@@ -8,7 +8,10 @@ const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
 const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
+const logoHeader = document.getElementById('logoHeader');
 let refreshTimer;
+
+logoHeader.addEventListener('click', showCryptoData);
 
 async function getCryptoData() {
 	const currency = 'usd';
@@ -56,9 +59,12 @@ function showLoading() {
 }
 
 function showCryptoData() {
+	document.title = 'Crypto Dashboard';
+	cryptoDashboardContainer.style.display = 'block';
 	cryptoDataTable.style.display = 'block';
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
+	setContainerContent(coinPagesContainer, '');
 }
 
 function setContainerContent(container, content) {
@@ -117,6 +123,7 @@ function createCryptoInfoRow(crypto, index) {
 	} = crypto;
 
 	const infoRow = document.createElement('tr');
+	infoRow.addEventListener('click', () => renderCoinPage(crypto, index));
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
 					<td class='crypto-index'>${index + 1}</td>
@@ -131,11 +138,28 @@ function createCryptoInfoRow(crypto, index) {
 	return infoRow;
 }
 
-function renderCoinPage() {
+function renderCoinPage(crypto, index) {
+	const {
+		id,
+		symbol,
+		name,
+		image,
+		current_price,
+		price_change_percentage_24h,
+	} = crypto;
+
+	document.title = name;
+
 	cryptoDashboardContainer.style.display = 'none';
 	coinPagesContainer.style.display = 'block';
 	coinPagesContainer.innerHTML = `
 		<h1>Coin Page</h1>
+		<div>
+			<img src="${image}" alt="${name} logo" class="crypto-image">
+			<h3>${name} ${symbol.toUpperCase()} Price ${index + 1}</h3>
+		</div>
+		<h1>$${current_price.toLocaleString()}</h1>
+		<p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)} (24h)</p>
 	`;
 }
 

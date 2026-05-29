@@ -95,6 +95,14 @@ td {
 	border-bottom: 1px solid gray;
 }
 
+tr {
+	cursor: pointer;
+}
+
+#logoHeader {
+	cursor: pointer;
+}
+
 .crypto-index {
 	width: 5%;
 	padding: 0.5rem 0;
