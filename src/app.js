@@ -15,9 +15,10 @@ logoHeader.addEventListener('click', showCryptoData);
 
 async function getCryptoData() {
 	const currency = 'usd';
+	const page = '1';
 	const perPage = '10';
 	const priceChangePercentage = '1h,24h,7d';
-	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
+	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${page}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
 		toggleLoading(true);
