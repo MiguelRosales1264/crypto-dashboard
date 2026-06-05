@@ -82,12 +82,21 @@ h6 {
 	transform: scale(0.75);
 }
 
+#cryptoDataContainer {
+	width: 100%;
+}
+
+#cryptoDataWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 #cryptoDataTable {
 	text-align: left;
 	margin: 1rem 2rem;
 	display: grid;
 	place-items: center;
-	height: 100vh;
 }
 
 th,
