@@ -84,12 +84,12 @@ h6 {
 
 #cryptoDataContainer {
 	width: 100%;
+	display: grid;
+	place-items: center;
 }
 
-#cryptoDataWrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+#cryptoPageButtons button {
+	padding: 1rem;
 }
 
 #cryptoDataTable {
