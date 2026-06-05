@@ -102,13 +102,7 @@ function getCryptoInfoRow(crypto, index) {
 	const { price_change_percentage_24h } = crypto;
 	const cryptoInfoRow = createCryptoInfoRow(crypto, index);
 
-	if (price_change_percentage_24h < 0) {
-		cryptoInfoRow.querySelector('.price-change-24h').style.color =
-			'var(--negative-change-color)';
-	} else {
-		cryptoInfoRow.querySelector('.price-change-24h').style.color =
-			'var(--positive-change-color)';
-	}
+	updatePriceChangeColor(price_change_percentage_24h, cryptoInfoRow);
 
 	return cryptoInfoRow;
 }
@@ -162,11 +156,15 @@ function renderCoinPage(crypto, index) {
 		<p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}% (24h)</p>
 	`;
 
-	if (price_change_percentage_24h < 0) {
-		coinPagesContainer.querySelector('.price-change-24h').style.color =
+	updatePriceChangeColor(price_change_percentage_24h, coinPagesContainer);
+}
+
+function updatePriceChangeColor(priceChange, container) {
+	if (priceChange < 0) {
+		container.querySelector('.price-change-24h').style.color =
 			'var(--negative-change-color)';
 	} else {
-		coinPagesContainer.querySelector('.price-change-24h').style.color =
+		container.querySelector('.price-change-24h').style.color =
 			'var(--positive-change-color)';
 	}
 }
