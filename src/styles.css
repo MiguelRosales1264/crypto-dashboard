@@ -169,3 +169,18 @@ tr {
 	border-radius: 8px;
 	z-index: 10;
 }
+
+#coinPagesContainer {
+	display: grid;
+	text-align: left;
+	margin: 1rem 2rem;
+	place-items: center;
+	height: 100vh;
+}
+
+.coin-page-header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin: 0 auto;
+}

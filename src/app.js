@@ -154,14 +154,21 @@ function renderCoinPage(crypto, index) {
 	cryptoDashboardContainer.style.display = 'none';
 	coinPagesContainer.style.display = 'block';
 	coinPagesContainer.innerHTML = `
-		<h1>Coin Page</h1>
-		<div>
+		<div class="coin-page-header">
 			<img src="${image}" alt="${name} logo" class="crypto-image">
-			<h3>${name} ${symbol.toUpperCase()} Price ${index + 1}</h3>
+			<h1>${name} ${symbol.toUpperCase()} Price ${index + 1}</h1>
 		</div>
 		<h1>$${current_price.toLocaleString()}</h1>
-		<p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)} (24h)</p>
+		<p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}% (24h)</p>
 	`;
+
+	if (price_change_percentage_24h < 0) {
+		coinPagesContainer.querySelector('.price-change-24h').style.color =
+			'var(--negative-change-color)';
+	} else {
+		coinPagesContainer.querySelector('.price-change-24h').style.color =
+			'var(--positive-change-color)';
+	}
 }
 
 updateCryptoData();
