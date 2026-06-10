@@ -60,8 +60,12 @@ function showLoading() {
 }
 
 function showCryptoData() {
-	document.title = 'Crypto Dashboard';
 	cryptoDashboardContainer.style.display = 'block';
+	resetUI();
+}
+
+function resetUI() {
+	document.title = 'Crypto Dashboard';
 	cryptoDataTable.style.display = 'block';
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
