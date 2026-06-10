@@ -134,6 +134,12 @@ function createCryptoInfoRow(crypto, index) {
 }
 
 function renderCoinPage(crypto, index) {
+	const { name } = crypto;
+	document.title = name;
+	createCoinPageHTML(crypto, index)
+}
+
+function createCoinPageHTML(crypto, index) {
 	const {
 		id,
 		symbol,
@@ -142,8 +148,6 @@ function renderCoinPage(crypto, index) {
 		current_price,
 		price_change_percentage_24h,
 	} = crypto;
-
-	document.title = name;
 
 	cryptoDashboardContainer.style.display = 'none';
 	coinPagesContainer.style.display = 'block';
@@ -169,4 +173,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-// updateCryptoData();
+updateCryptoData();
