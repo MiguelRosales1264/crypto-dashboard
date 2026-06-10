@@ -9,14 +9,27 @@ const cryptoDataBody = document.getElementById('cryptoDataBody');
 const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 const logoHeader = document.getElementById('logoHeader');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const imageIndex = document.getElementById('imageIndex');
+let currentPage = 1;
+
 let refreshTimer;
 
 logoHeader.addEventListener('click', showCryptoData);
+prevBtn.addEventListener('click', () => {
+	currentPage = (currentPage - 1);
+	updateCryptoData();
+})
+
+nextBtn.addEventListener('click', () => {
+	currentPage = (currentPage + 1);
+	updateCryptoData();
+})
 
 async function getCryptoData() {
 	const currency = 'usd';
-	const currentPage = '1';
-	const perPage = '10';
+	const perPage = 10;
 	const priceChangePercentage = '1h,24h,7d';
 	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
@@ -37,6 +50,7 @@ async function getCryptoData() {
 }
 
 function showErrorMessage(error, message) {
+	console.log(error)
 	setContainerContent(
 		cryptoDataErrorDiv,
 		`<p class='errorMessage'>${message}</p>`,
@@ -70,6 +84,7 @@ function resetUI() {
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
 	setContainerContent(coinPagesContainer, '');
+	imageIndex.textContent = `${currentPage} / 10`;
 }
 
 function setContainerContent(container, content) {
@@ -176,7 +191,5 @@ function updatePriceChangeColor(priceChange, container) {
 			'var(--positive-change-color)';
 	}
 }
-
-
 
 updateCryptoData();
