@@ -177,4 +177,6 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
+
+
 updateCryptoData();
