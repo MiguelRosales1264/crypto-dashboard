@@ -1,5 +1,5 @@
 const API_KEY = 'CG-yY8T2xc9QH1fkNFNpq4gbYw4';
-const API_URL = 'https://api.coingecko.com/api/v3/';
+const API_URL = 'https://api.coingecko.com/api/v3';
 
 const cryptoDashboardContainer = document.getElementById('cryptoDataContainer');
 const coinPagesContainer = document.getElementById('coinPagesContainer');
@@ -18,25 +18,44 @@ let refreshTimer;
 
 logoHeader.addEventListener('click', showCryptoData);
 prevBtn.addEventListener('click', () => {
-	currentPage = (currentPage - 1);
+	currentPage = currentPage - 1;
+	if (currentPage < 1) {
+		currentPage = 1;
+		return;
+	}
 	updateCryptoData();
-})
+});
 
 nextBtn.addEventListener('click', () => {
-	currentPage = (currentPage + 1);
+	currentPage = currentPage + 1;
 	updateCryptoData();
-})
+});
+
+async function getCoinListData() {
+	const url = `${API_URL}/coins/list?x_cg_demo_api_key=${API_KEY}`;
+
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		console.log(data);
+		return data;
+	} catch (error) {
+		showErrorMessage(error, 'Error fetching from coin/list api.');
+		return [];
+	}
+}
 
 async function getCryptoData() {
 	const currency = 'usd';
 	const perPage = 10;
 	const priceChangePercentage = '1h,24h,7d';
-	const url = `${API_URL}coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
+	const url = `${API_URL}/coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
 		toggleLoading(true);
 		const response = await fetch(url);
 		const data = await response.json();
+		getCoinListData();
 		return data;
 	} catch (error) {
 		showErrorMessage(
@@ -50,7 +69,7 @@ async function getCryptoData() {
 }
 
 function showErrorMessage(error, message) {
-	console.log(error)
+	console.log(error);
 	setContainerContent(
 		cryptoDataErrorDiv,
 		`<p class='errorMessage'>${message}</p>`,
@@ -155,7 +174,7 @@ function createCryptoInfoRow(crypto, index) {
 function renderCoinPage(crypto, index) {
 	const { name } = crypto;
 	document.title = name;
-	createCoinPageHTML(crypto, index)
+	createCoinPageHTML(crypto, index);
 }
 
 function createCoinPageHTML(crypto, index) {
@@ -192,4 +211,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-updateCryptoData();
+// updateCryptoData();
