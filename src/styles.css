@@ -1,5 +1,6 @@
 :root {
 	--primary-color: #e5e5e5;
+	--secondary-color: #f0f0f0;
 	--text-color: black;
 	--positive-change-color: green;
 	--negative-change-color: red;
@@ -43,6 +44,35 @@ h6 {
 	display: grid;
 	place-items: center;
 	gap: .5rem;
+}
+
+#countdownTimerContainer {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.time-box {
+    background: #162447;
+    padding: 8px 16px;
+    border-radius: 8px;
+    min-width: 90px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.time-box span {
+    display: block;
+    font-weight: bold;
+    color: #e43f5a;
+}
+
+.time-box small {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #bbb;
 }
 
 #header {
