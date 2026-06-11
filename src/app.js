@@ -55,7 +55,7 @@ async function getCryptoData() {
 		toggleLoading(true);
 		const response = await fetch(url);
 		const data = await response.json();
-		getCoinListData();
+		// getCoinListData();
 		return data;
 	} catch (error) {
 		showErrorMessage(
@@ -159,7 +159,7 @@ function createCryptoInfoRow(crypto, index) {
 	infoRow.addEventListener('click', () => renderCoinPage(crypto, index));
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
-					<td class='crypto-index'>${index + 1}</td>
+					<td class='crypto-index'>${(index + 1) + (10 * (currentPage - 1))}</td>
 					<td class='crypto-details'>
 						<img src="${image}" alt="${name} logo" class="crypto-image">
 						<h2 class="crypto-name">${name}</h2>
@@ -211,4 +211,5 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-// updateCryptoData();
+updateCryptoData();
+// getCoinListData();
