@@ -116,6 +116,7 @@ h6 {
 	margin: 1rem 2rem;
 	display: grid;
 	place-items: center;
+	border-collapse: collapse;
 }
 
 th,

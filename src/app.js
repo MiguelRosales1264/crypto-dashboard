@@ -9,6 +9,7 @@ const cryptoDataBody = document.getElementById('cryptoDataBody');
 const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 const logoHeader = document.getElementById('logoHeader');
+const pageButtonsContainer = document.getElementById('pageButtonsContainer');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const imageIndex = document.getElementById('imageIndex');
@@ -37,11 +38,17 @@ async function getCoinListData() {
 	try {
 		const response = await fetch(url);
 		const data = await response.json();
+		console.log(response);
 		return data;
 	} catch (error) {
 		showErrorMessage(error, 'Error fetching from coin/list api.');
 		return [];
 	}
+}
+
+function getTotalPages() {
+	const data = getCoinListData();
+
 }
 
 async function getCryptoData() {
@@ -54,7 +61,7 @@ async function getCryptoData() {
 		toggleLoading(true);
 		const response = await fetch(url);
 		const data = await response.json();
-		// getCoinListData();
+		getCoinListData();
 		return data;
 	} catch (error) {
 		showErrorMessage(
@@ -85,6 +92,7 @@ function toggleLoading(isLoading) {
 
 function showLoading() {
 	cryptoDataTable.style.display = 'none';
+	pageButtonsContainer.style.display = 'none';
 	setContainerContent(
 		cryptoDataLoadingDiv,
 		'<p class="loadingStateText">Loading...</p>',
@@ -93,6 +101,7 @@ function showLoading() {
 
 function showCryptoData() {
 	cryptoDashboardContainer.style.display = 'block';
+	pageButtonsContainer.style.display = 'block';
 	resetUI();
 }
 
@@ -102,7 +111,7 @@ function resetUI() {
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
 	setContainerContent(coinPagesContainer, '');
-	imageIndex.textContent = `${currentPage} / 10`;
+	imageIndex.textContent = `Page ${currentPage}`;
 }
 
 function setContainerContent(container, content) {
@@ -214,4 +223,3 @@ function updatePriceChangeColor(priceChange, container) {
 }
 
 updateCryptoData();
-// getCoinListData();
