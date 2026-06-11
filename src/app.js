@@ -37,7 +37,6 @@ async function getCoinListData() {
 	try {
 		const response = await fetch(url);
 		const data = await response.json();
-		console.log(data);
 		return data;
 	} catch (error) {
 		showErrorMessage(error, 'Error fetching from coin/list api.');
@@ -159,14 +158,14 @@ function createCryptoInfoRow(crypto, index) {
 	infoRow.addEventListener('click', () => renderCoinPage(crypto, index));
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
-					<td class='crypto-index'>${(index + 1) + (10 * (currentPage - 1))}</td>
+					<td class='crypto-index'>${index + 1 + 10 * (currentPage - 1)}</td>
 					<td class='crypto-details'>
 						<img src="${image}" alt="${name} logo" class="crypto-image">
 						<h2 class="crypto-name">${name}</h2>
 						<p class="crypto-id">${symbol.toUpperCase()}</p>
 					</td>
 					<td class='crypto-price'>$${current_price.toLocaleString()}</td>
-					<td class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}%</td>
+					<td class='crypto-change price-change-24h'>${price_change_percentage_24h != null ? `${price_change_percentage_24h.toFixed(1)}%` : 'N/A'}</td>
 				`;
 	return infoRow;
 }
@@ -205,9 +204,12 @@ function updatePriceChangeColor(priceChange, container) {
 	if (priceChange < 0) {
 		container.querySelector('.price-change-24h').style.color =
 			'var(--negative-change-color)';
-	} else {
+	} else if (priceChange > 0) {
 		container.querySelector('.price-change-24h').style.color =
 			'var(--positive-change-color)';
+	} else {
+		container.querySelector('.price-change-24h').style.color =
+			'black';
 	}
 }
 
