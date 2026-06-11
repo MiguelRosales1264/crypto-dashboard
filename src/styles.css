@@ -46,7 +46,7 @@ h6 {
 	gap: .5rem;
 }
 
-#countdownTimerContainer {
+#countdownContainer {
 	text-align: center;
 	display: flex;
 	justify-content: center;
@@ -55,7 +55,7 @@ h6 {
 }
 
 .time-box {
-    background: #162447;
+    background: var(--secondary-color);
     padding: 8px 16px;
     border-radius: 8px;
     min-width: 90px;
@@ -72,7 +72,7 @@ h6 {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #bbb;
+    color: #e43f5a;
 }
 
 #header {

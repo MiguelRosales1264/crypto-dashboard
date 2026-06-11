@@ -13,9 +13,17 @@ const pageButtonsContainer = document.getElementById('pageButtonsContainer');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const imageIndex = document.getElementById('imageIndex');
+const countdownSeconds = document.getElementById('countdownSeconds');
 let currentPage = 1;
+let refreshTimeout;
+let countdownInterval;
 
-let refreshTimer;
+function startCountdown() {
+	let countdownTime = new Date().getTime();
+	console.log(countdownTime)
+}
+
+startCountdown()
 
 logoHeader.addEventListener('click', showCryptoData);
 prevBtn.addEventListener('click', () => {
@@ -48,7 +56,6 @@ async function getCoinListData() {
 
 function getTotalPages() {
 	const data = getCoinListData();
-
 }
 
 async function getCryptoData() {
@@ -140,8 +147,8 @@ function renderCryptoData(response) {
 }
 
 function resetCryptoTimer() {
-	clearTimeout(refreshTimer);
-	refreshTimer = setTimeout(updateCryptoData, 60 * 1000);
+	clearTimeout(refreshTimeout);
+	refreshTimeout = setTimeout(updateCryptoData, 60 * 1000);
 }
 
 function getCryptoInfoRow(crypto, index) {
@@ -217,9 +224,8 @@ function updatePriceChangeColor(priceChange, container) {
 		container.querySelector('.price-change-24h').style.color =
 			'var(--positive-change-color)';
 	} else {
-		container.querySelector('.price-change-24h').style.color =
-			'black';
+		container.querySelector('.price-change-24h').style.color = 'black';
 	}
 }
 
-updateCryptoData();
+// updateCryptoData();
