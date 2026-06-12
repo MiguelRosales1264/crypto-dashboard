@@ -33,7 +33,7 @@ function updateTimer() {
 	if (timeLeft <= 0) {
 		clearInterval(countdownInterval);
 		countdownSeconds.textContent = '00';
-		alert("Time's up!");
+		console.log("Time's up!");
 	}
 }
 
