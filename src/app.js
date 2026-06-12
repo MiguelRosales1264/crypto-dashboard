@@ -16,14 +16,26 @@ const imageIndex = document.getElementById('imageIndex');
 const countdownSeconds = document.getElementById('countdownSeconds');
 let currentPage = 1;
 let refreshTimeout;
-let countdownInterval;
+let countdownInterval = setInterval(updateTimer, 1000);
+const TIMER_DURATION = 60 * 1000; 
 
-function startCountdown() {
-	let countdownTime = new Date().getTime();
-	console.log(countdownTime)
+let timeLeft = TIMER_DURATION / 1000;
+
+function updateTimer() {
+	timeLeft--;
+	
+	const seconds = timeLeft % 60;
+
+	const formattedSeconds = String(seconds).padStart(2, '0');
+
+	countdownSeconds.textContent = `${formattedSeconds}`;
+	
+	if (timeLeft <= 0) {
+		clearInterval(countdownInterval);
+		countdownSeconds.textContent = '00';
+		alert("Time's up!");
+	}
 }
-
-startCountdown()
 
 logoHeader.addEventListener('click', showCryptoData);
 prevBtn.addEventListener('click', () => {
@@ -148,7 +160,7 @@ function renderCryptoData(response) {
 
 function resetCryptoTimer() {
 	clearTimeout(refreshTimeout);
-	refreshTimeout = setTimeout(updateCryptoData, 60 * 1000);
+	refreshTimeout = setTimeout(updateCryptoData, TIMER_DURATION);
 }
 
 function getCryptoInfoRow(crypto, index) {
