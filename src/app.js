@@ -16,7 +16,7 @@ const imageIndex = document.getElementById('imageIndex');
 const countdownSeconds = document.getElementById('countdownSeconds');
 let currentPage = 1;
 let refreshTimeout;
-let countdownInterval = setInterval(updateTimer, 1000);
+// let countdownInterval = setInterval(updateTimer, 1000);
 const TIMER_DURATION = 60 * 1000; 
 
 let timeLeft = TIMER_DURATION / 1000;
