@@ -240,4 +240,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-// updateCryptoData();
+updateCryptoData();

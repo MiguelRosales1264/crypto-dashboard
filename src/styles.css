@@ -139,7 +139,7 @@ h6 {
 }
 
 #cryptoPageButtons button {
-	padding: 1rem;
+	margin: 0.5rem 0;
 }
 
 #cryptoDataTable {
@@ -243,4 +243,10 @@ tr {
 	align-items: center;
 	gap: 1rem;
 	margin: 0 auto;
+}
+
+#imageIndex {
+	font-size: .9rem;
+	margin: 0.5rem;
+	padding: 0.5rem;
 }
