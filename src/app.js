@@ -1,7 +1,7 @@
 const API_KEY = 'CG-yY8T2xc9QH1fkNFNpq4gbYw4';
 const API_URL = 'https://api.coingecko.com/api/v3';
 
-const cryptoDashboardContainer = document.getElementById('cryptoDataContainer');
+const cryptoDataContainer = document.getElementById('cryptoDataContainer');
 const coinPagesContainer = document.getElementById('coinPagesContainer');
 const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
@@ -110,7 +110,7 @@ function toggleLoading(isLoading) {
 }
 
 function showLoading() {
-	cryptoDataTable.style.display = 'none';
+	cryptoDataContainer.style.display = 'none';
 	pageButtonsContainer.style.display = 'none';
 	setContainerContent(
 		cryptoDataLoadingDiv,
@@ -119,14 +119,14 @@ function showLoading() {
 }
 
 function showCryptoData() {
-	cryptoDashboardContainer.style.display = 'block';
+	cryptoDataContainer.style.display = 'flex';
 	pageButtonsContainer.style.display = 'block';
 	resetUI();
 }
 
 function resetUI() {
 	document.title = 'Crypto Dashboard';
-	cryptoDataTable.style.display = 'block';
+	cryptoDataContainer.style.display = 'flex';
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
 	setContainerContent(coinPagesContainer, '');
@@ -214,7 +214,7 @@ function createCoinPageHTML(crypto, index) {
 		price_change_percentage_24h,
 	} = crypto;
 
-	cryptoDashboardContainer.style.display = 'none';
+	cryptoDataContainer.style.display = 'none';
 	coinPagesContainer.style.display = 'block';
 	coinPagesContainer.innerHTML = `
 		<div class="coin-page-header">
