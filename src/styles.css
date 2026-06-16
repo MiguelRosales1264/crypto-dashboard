@@ -1,3 +1,5 @@
+/* GLOBAL STYLES */
+
 :root {
 	--primary-color: #e5e5e5;
 	--secondary-color: #f0f0f0;
@@ -46,6 +48,8 @@ h6 {
 	gap: .5rem;
 }
 
+/* HEADER STYLES */
+
 #countdownContainer {
 	text-align: center;
 	display: flex;
@@ -81,6 +85,10 @@ h6 {
 	padding: 0.75rem 2rem;
 	display: flex;
 	justify-content: space-between;
+}
+
+#logoHeader {
+	cursor: pointer;
 }
 
 .logo {
@@ -132,6 +140,9 @@ h6 {
 	transform: scale(0.75);
 }
 
+/* MAIN CONTAINER STYLING */
+
+/* CRYPTO DATA CONTAINER STYLING */
 #cryptoDataContainer {
 	width: 100%;
 	display: grid;
@@ -141,6 +152,14 @@ h6 {
 #cryptoPageButtons button {
 	margin: 0.5rem 0;
 }
+
+#imageIndex {
+	font-size: .9rem;
+	margin: 0.5rem;
+	padding: 0.5rem;
+}
+
+/* CRYPTO TABLE STYLING */
 
 #cryptoDataTable {
 	text-align: left;
@@ -156,10 +175,6 @@ td {
 }
 
 tr {
-	cursor: pointer;
-}
-
-#logoHeader {
 	cursor: pointer;
 }
 
@@ -200,6 +215,8 @@ tr {
 	padding: 10px;
 }
 
+/* LOADING STATE STYLING */
+
 .loadingStateText {
 	position: fixed;
 	top: 50%;
@@ -214,6 +231,8 @@ tr {
 	border-radius: 8px;
 	z-index: 10;
 }
+
+/* ERROR MESSAGE STYLING */
 
 .errorMessage {
 	position: fixed;
@@ -230,6 +249,8 @@ tr {
 	z-index: 10;
 }
 
+/* COIN PAGES CONTAINER STYLING */
+
 #coinPagesContainer {
 	display: grid;
 	text-align: left;
@@ -243,10 +264,4 @@ tr {
 	align-items: center;
 	gap: 1rem;
 	margin: 0 auto;
-}
-
-#imageIndex {
-	font-size: .9rem;
-	margin: 0.5rem;
-	padding: 0.5rem;
 }
