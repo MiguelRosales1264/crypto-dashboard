@@ -51,7 +51,7 @@ nextBtn.addEventListener('click', () => {
 	updateCryptoData();
 });
 
-async function getCoinListData() {
+async function getCryptoGlobalData() {
 	const url = `${API_URL}/coins/list?x_cg_demo_api_key=${API_KEY}`;
 
 	try {
@@ -66,7 +66,7 @@ async function getCoinListData() {
 }
 
 function getTotalPages() {
-	const data = getCoinListData();
+	const data = getCryptoGlobalData();
 }
 
 async function getCryptoData() {
@@ -79,7 +79,6 @@ async function getCryptoData() {
 		toggleLoading(true);
 		const response = await fetch(url);
 		const data = await response.json();
-		getCoinListData();
 		return data;
 	} catch (error) {
 		showErrorMessage(
