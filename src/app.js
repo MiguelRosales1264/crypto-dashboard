@@ -23,9 +23,7 @@ let timeLeft = TIMER_DURATION / 1000;
 
 function updateTimer() {
 	timeLeft--;
-	
 	const seconds = timeLeft % 60;
-
 	const formattedSeconds = String(seconds).padStart(2, '0');
 
 	countdownSeconds.textContent = `${formattedSeconds}`;
@@ -38,6 +36,7 @@ function updateTimer() {
 }
 
 logoHeader.addEventListener('click', showCryptoData);
+
 prevBtn.addEventListener('click', () => {
 	currentPage = currentPage - 1;
 	if (currentPage < 1) {
