@@ -16,24 +16,25 @@ const imageIndex = document.getElementById('imageIndex');
 const countdownSeconds = document.getElementById('countdownSeconds');
 let currentPage = 1;
 let refreshTimeout;
+const TIMER_DURATION = 60 * 1000;
 // let countdownInterval = setInterval(updateTimer, 1000);
-const TIMER_DURATION = 60 * 1000; 
+// let timeLeft = TIMER_DURATION / 1000;
 
-let timeLeft = TIMER_DURATION / 1000;
+const pageCache = {};
 
-function updateTimer() {
-	timeLeft--;
-	const seconds = timeLeft % 60;
-	const formattedSeconds = String(seconds).padStart(2, '0');
+// function updateTimer() {
+// 	timeLeft--;
+// 	const seconds = timeLeft % 60;
+// 	const formattedSeconds = String(seconds).padStart(2, '0');
 
-	countdownSeconds.textContent = `${formattedSeconds}`;
-	
-	if (timeLeft <= 0) {
-		clearInterval(countdownInterval);
-		countdownSeconds.textContent = '00';
-		console.log("Time's up!");
-	}
-}
+// 	countdownSeconds.textContent = `${formattedSeconds}`;
+
+// 	if (timeLeft <= 0) {
+// 		clearInterval(countdownInterval);
+// 		countdownSeconds.textContent = '00';
+// 		console.log("Time's up!");
+// 	}
+// }
 
 logoHeader.addEventListener('click', showCryptoData);
 
@@ -136,8 +137,14 @@ function setContainerContent(container, content) {
 }
 
 async function updateCryptoData() {
+	if (pageCache[currentPage]) {
+		renderCryptoData(pageCache[currentPage]);
+		return;
+	}
+
 	try {
 		const response = await getCryptoData();
+		cachePageData(response);
 		renderCryptoData(response);
 		resetCryptoTimer();
 	} catch (error) {
@@ -148,12 +155,17 @@ async function updateCryptoData() {
 	}
 }
 
+function cachePageData(response) {
+	pageCache[currentPage] = response;
+}
+
 function renderCryptoData(response) {
 	cryptoDataBody.innerHTML = '';
 	response.forEach((crypto, index) => {
 		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 		cryptoDataBody.appendChild(cryptoInfoRow);
 	});
+	imageIndex.textContent = `Page ${currentPage}`;
 }
 
 function resetCryptoTimer() {
