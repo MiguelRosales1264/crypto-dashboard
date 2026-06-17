@@ -15,12 +15,12 @@ const nextBtn = document.getElementById('nextBtn');
 const imageIndex = document.getElementById('imageIndex');
 const countdownSeconds = document.getElementById('countdownSeconds');
 let currentPage = 1;
+const pageCache = {};
 let refreshTimeout;
 const TIMER_DURATION = 60 * 1000;
+const CACHE_DURATION = 60 * 1000;
 // let countdownInterval = setInterval(updateTimer, 1000);
 // let timeLeft = TIMER_DURATION / 1000;
-
-const pageCache = {};
 
 // function updateTimer() {
 // 	timeLeft--;
@@ -68,6 +68,31 @@ async function getCryptoGlobalData() {
 
 function getTotalPages() {
 	const data = getCryptoGlobalData();
+}
+
+function saveToLocalStorage(page, data) {
+	const entry = {
+		timestamp: Date.now(),
+		data: data,
+	};
+	localStorage.setItem(`cachedPage_${page}`, JSON.stringify(entry));
+}
+
+function loadFromLocalStorage(page) {
+	const raw = localStorage.getItem(`cachedPage_${page}`);
+	if (!raw) {
+		return null;
+	}
+
+	const entry = JSON.parse(raw);
+	const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
+
+	if (isExpired) {
+		localStorage.removeItem(`cachedPage_${page}`);
+		return null;
+	}
+
+	return entry.data;
 }
 
 async function getCryptoData() {
@@ -139,6 +164,13 @@ function setContainerContent(container, content) {
 async function updateCryptoData() {
 	if (pageCache[currentPage]) {
 		renderCryptoData(pageCache[currentPage]);
+		return;
+	}
+
+	const stored = loadFromLocalStorage(currentPage);
+	if (stored) {
+		cachePageData(stored);
+		renderCryptoData(stored);
 		return;
 	}
 
