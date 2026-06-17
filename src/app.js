@@ -70,31 +70,6 @@ function getTotalPages() {
 	const data = getCryptoGlobalData();
 }
 
-function saveToLocalStorage(page, data) {
-	const entry = {
-		timestamp: Date.now(),
-		data: data,
-	};
-	localStorage.setItem(`cachedPage_${page}`, JSON.stringify(entry));
-}
-
-function loadFromLocalStorage(page) {
-	const raw = localStorage.getItem(`cachedPage_${page}`);
-	if (!raw) {
-		return null;
-	}
-
-	const entry = JSON.parse(raw);
-	const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
-
-	if (isExpired) {
-		localStorage.removeItem(`cachedPage_${page}`);
-		return null;
-	}
-
-	return entry.data;
-}
-
 async function getCryptoData() {
 	const currency = 'usd';
 	const perPage = 10;
@@ -189,6 +164,32 @@ async function updateCryptoData() {
 
 function cachePageData(response) {
 	pageCache[currentPage] = response;
+}
+
+
+function saveToLocalStorage(page, data) {
+	const entry = {
+		timestamp: Date.now(),
+		data: data,
+	};
+	localStorage.setItem(`cachedPage_${page}`, JSON.stringify(entry));
+}
+
+function loadFromLocalStorage(page) {
+	const raw = localStorage.getItem(`cachedPage_${page}`);
+	if (!raw) {
+		return null;
+	}
+
+	const entry = JSON.parse(raw);
+	const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
+
+	if (isExpired) {
+		localStorage.removeItem(`cachedPage_${page}`);
+		return null;
+	}
+
+	return entry.data;
 }
 
 function renderCryptoData(response) {
