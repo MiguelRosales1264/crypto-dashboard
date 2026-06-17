@@ -52,7 +52,7 @@ nextBtn.addEventListener('click', () => {
 });
 
 async function getCryptoGlobalData() {
-	const url = `${API_URL}/coins/list?x_cg_demo_api_key=${API_KEY}`;
+	const url = `${API_URL}/global?x_cg_demo_api_key=${API_KEY}`;
 
 	try {
 		const response = await fetch(url);
