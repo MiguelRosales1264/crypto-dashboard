@@ -162,10 +162,9 @@ async function updateCryptoData() {
 	}
 }
 
-function cachePageData(response) {
-	pageCache[currentPage] = response;
+function cachePageData(data) {
+	pageCache[currentPage] = data;
 }
-
 
 function saveToLocalStorage(page, data) {
 	const entry = {
