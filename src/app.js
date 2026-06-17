@@ -12,9 +12,13 @@ const logoHeader = document.getElementById('logoHeader');
 const pageButtonsContainer = document.getElementById('pageButtonsContainer');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-const imageIndex = document.getElementById('imageIndex');
+const pageIndex = document.getElementById('pageIndex');
 const countdownSeconds = document.getElementById('countdownSeconds');
+const priceChangePercentage = '1h,24h,7d';
+const currency = 'usd';
+const perPage = 10;
 let currentPage = 1;
+let totalPages;
 const pageCache = {};
 let refreshTimeout;
 const TIMER_DURATION = 60 * 1000;
@@ -52,13 +56,12 @@ nextBtn.addEventListener('click', () => {
 	updateCryptoData();
 });
 
-async function getCryptoGlobalData() {
+async function getGlobalCryptoData() {
 	const url = `${API_URL}/global?x_cg_demo_api_key=${API_KEY}`;
 
 	try {
 		const response = await fetch(url);
 		const data = await response.json();
-		console.log(response);
 		return data;
 	} catch (error) {
 		showErrorMessage(error, 'Error fetching from coin/list api.');
@@ -66,14 +69,13 @@ async function getCryptoGlobalData() {
 	}
 }
 
-function getTotalPages() {
-	const data = getCryptoGlobalData();
+async function getTotalPages() {
+	const data = await getGlobalCryptoData();
+	const { active_cryptocurrencies } = data.data;
+	totalPages = Math.ceil(active_cryptocurrencies / perPage);
 }
 
 async function getCryptoData() {
-	const currency = 'usd';
-	const perPage = 10;
-	const priceChangePercentage = '1h,24h,7d';
 	const url = `${API_URL}/coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
@@ -129,7 +131,11 @@ function resetUI() {
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
 	setContainerContent(coinPagesContainer, '');
-	imageIndex.textContent = `Page ${currentPage}`;
+	updatePageIndex();
+}
+
+function updatePageIndex() {
+	pageIndex.textContent = `${currentPage} / ${totalPages}`;
 }
 
 function setContainerContent(container, content) {
@@ -197,7 +203,7 @@ function renderCryptoData(response) {
 		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 		cryptoDataBody.appendChild(cryptoInfoRow);
 	});
-	imageIndex.textContent = `Page ${currentPage}`;
+	updatePageIndex();
 }
 
 function resetCryptoTimer() {
@@ -283,3 +289,4 @@ function updatePriceChangeColor(priceChange, container) {
 }
 
 updateCryptoData();
+getTotalPages();
