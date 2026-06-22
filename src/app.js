@@ -62,6 +62,7 @@ async function getGlobalCryptoData() {
 	try {
 		const response = await fetch(url);
 		const data = await response.json();
+		console.log(data);
 		return data;
 	} catch (error) {
 		showErrorMessage(error, 'Error fetching from coin/list api.');
@@ -69,10 +70,14 @@ async function getGlobalCryptoData() {
 	}
 }
 
-async function getTotalPages() {
+async function setTotalPages() {
+	console.log('inside setTotalPages method')
 	const data = await getGlobalCryptoData();
+	console.log('retrieved data from getGlobalCryptoData')
 	const { active_cryptocurrencies } = data.data;
+	console.log('setTotalPages before ' + totalPages)
 	totalPages = Math.ceil(active_cryptocurrencies / perPage);
+	console.log('setTotalPages after ' + totalPages)
 }
 
 async function getCryptoData() {
@@ -95,7 +100,7 @@ async function getCryptoData() {
 }
 
 function showErrorMessage(error, message) {
-	console.log(error);
+	console.error(error);
 	setContainerContent(
 		cryptoDataErrorDiv,
 		`<p class='errorMessage'>${message}</p>`,
@@ -131,10 +136,18 @@ function resetUI() {
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
 	setContainerContent(coinPagesContainer, '');
+	console.log('totalPages from resetUI: ' + totalPages)
 	updatePageIndex();
 }
 
-function updatePageIndex() {
+async function updatePageIndex() {
+	console.log(true == !totalPages);
+	if (!totalPages) {
+		console.log('inside if statement, before func ' + totalPages)
+		setTotalPages();
+		console.log('inside if statement, after func ' + totalPages)
+	}
+	console.log('outside if statement ' + totalPages);
 	pageIndex.textContent = `${currentPage} / ${totalPages}`;
 }
 
@@ -144,18 +157,21 @@ function setContainerContent(container, content) {
 
 async function updateCryptoData() {
 	if (pageCache[currentPage]) {
+		console.log('loading from pageCache')
 		renderCryptoData(pageCache[currentPage]);
 		return;
 	}
 
 	const stored = loadFromLocalStorage(currentPage);
 	if (stored) {
+		console.log('loading from local storage');
 		cachePageData(stored);
 		renderCryptoData(stored);
 		return;
 	}
 
 	try {
+		console.log('loading from API');
 		const response = await getCryptoData();
 		cachePageData(response);
 		renderCryptoData(response);
@@ -170,14 +186,15 @@ async function updateCryptoData() {
 
 function cachePageData(data) {
 	pageCache[currentPage] = data;
+	saveToLocalStorage(currentPage, data)
 }
 
-function saveToLocalStorage(page, data) {
+function saveToLocalStorage(pageIndex, data) {
 	const entry = {
 		timestamp: Date.now(),
 		data: data,
 	};
-	localStorage.setItem(`cachedPage_${page}`, JSON.stringify(entry));
+	localStorage.setItem(`cachedPage_${pageIndex}`, JSON.stringify(entry));
 }
 
 function loadFromLocalStorage(page) {
@@ -193,17 +210,18 @@ function loadFromLocalStorage(page) {
 		localStorage.removeItem(`cachedPage_${page}`);
 		return null;
 	}
-
 	return entry.data;
 }
 
-function renderCryptoData(response) {
+async function renderCryptoData(response) {
 	cryptoDataBody.innerHTML = '';
 	response.forEach((crypto, index) => {
 		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 		cryptoDataBody.appendChild(cryptoInfoRow);
 	});
+	console.log('totalPages from renderCryptoData 1: ' + totalPages);
 	updatePageIndex();
+	console.log('totalPages from renderCryptoData 2: ' + totalPages);
 }
 
 function resetCryptoTimer() {
@@ -288,5 +306,5 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
+// setTotalPages();
 updateCryptoData();
-getTotalPages();
