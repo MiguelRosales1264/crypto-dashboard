@@ -62,7 +62,6 @@ async function getGlobalCryptoData() {
 	try {
 		const response = await fetch(url);
 		const data = await response.json();
-		console.log(data);
 		return data;
 	} catch (error) {
 		showErrorMessage(error, 'Error fetching from coin/list api.');
@@ -71,13 +70,9 @@ async function getGlobalCryptoData() {
 }
 
 async function setTotalPages() {
-	console.log('inside setTotalPages method')
 	const data = await getGlobalCryptoData();
-	console.log('retrieved data from getGlobalCryptoData')
 	const { active_cryptocurrencies } = data.data;
-	console.log('setTotalPages before ' + totalPages)
 	totalPages = Math.ceil(active_cryptocurrencies / perPage);
-	console.log('setTotalPages after ' + totalPages)
 }
 
 async function getCryptoData() {
@@ -136,18 +131,13 @@ function resetUI() {
 	setContainerContent(cryptoDataLoadingDiv, '');
 	setContainerContent(cryptoDataErrorDiv, '');
 	setContainerContent(coinPagesContainer, '');
-	console.log('totalPages from resetUI: ' + totalPages)
 	updatePageIndex();
 }
 
 async function updatePageIndex() {
-	console.log(true == !totalPages);
 	if (!totalPages) {
-		console.log('inside if statement, before func ' + totalPages)
-		setTotalPages();
-		console.log('inside if statement, after func ' + totalPages)
+		await setTotalPages();
 	}
-	console.log('outside if statement ' + totalPages);
 	pageIndex.textContent = `${currentPage} / ${totalPages}`;
 }
 
@@ -157,14 +147,12 @@ function setContainerContent(container, content) {
 
 async function updateCryptoData() {
 	if (pageCache[currentPage]) {
-		console.log('loading from pageCache')
 		renderCryptoData(pageCache[currentPage]);
 		return;
 	}
 
 	const stored = loadFromLocalStorage(currentPage);
 	if (stored) {
-		console.log('loading from local storage');
 		cachePageData(stored);
 		renderCryptoData(stored);
 		return;
@@ -213,15 +201,13 @@ function loadFromLocalStorage(page) {
 	return entry.data;
 }
 
-async function renderCryptoData(response) {
+function renderCryptoData(response) {
 	cryptoDataBody.innerHTML = '';
 	response.forEach((crypto, index) => {
 		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
 		cryptoDataBody.appendChild(cryptoInfoRow);
 	});
-	console.log('totalPages from renderCryptoData 1: ' + totalPages);
 	updatePageIndex();
-	console.log('totalPages from renderCryptoData 2: ' + totalPages);
 }
 
 function resetCryptoTimer() {
@@ -306,5 +292,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-// setTotalPages();
 updateCryptoData();
