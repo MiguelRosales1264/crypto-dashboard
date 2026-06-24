@@ -22,7 +22,8 @@ let totalPages;
 const pageCache = {};
 let refreshTimeout;
 const TIMER_DURATION = 60 * 1000;
-const CACHE_DURATION = 60 * 1000;
+const COIN_CACHE_DURATION = 60 * 1000;
+const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
 // let countdownInterval = setInterval(updateTimer, 1000);
 // let timeLeft = TIMER_DURATION / 1000;
 
@@ -73,6 +74,7 @@ async function setTotalPages() {
 	const data = await getGlobalCryptoData();
 	const { active_cryptocurrencies } = data.data;
 	totalPages = Math.ceil(active_cryptocurrencies / perPage);
+	savePageTotalToLocalStorage()
 }
 
 function setCurrentPage(page) {
@@ -151,15 +153,23 @@ function setContainerContent(container, content) {
 }
 
 async function updateCryptoData() {
+	if (!totalPages) {
+		const storedTotalPages = loadTotalPagesFromLocalStorage();
+		if (storedTotalPages) {
+			console.log('loaded total pages from local storage')
+			totalPages = storedTotalPages;
+		}
+	}
+
 	if (pageCache[currentPage]) {
 		renderCryptoData(pageCache[currentPage]);
 		return;
 	}
 
-	const stored = loadFromLocalStorage(currentPage);
-	if (stored) {
-		cachePageData(stored);
-		renderCryptoData(stored);
+	const storedPageData = loadPageDataFromLocalStorage(currentPage);
+	if (storedPageData) {
+		cachePageData(storedPageData);
+		renderCryptoData(storedPageData);
 		return;
 	}
 
@@ -178,10 +188,10 @@ async function updateCryptoData() {
 
 function cachePageData(data) {
 	pageCache[currentPage] = data;
-	saveToLocalStorage(currentPage, data)
+	savePageDataToLocalStorage(currentPage, data)
 }
 
-function saveToLocalStorage(pageIndex, data) {
+function savePageDataToLocalStorage(pageIndex, data) {
 	const entry = {
 		timestamp: Date.now(),
 		data: data,
@@ -189,17 +199,41 @@ function saveToLocalStorage(pageIndex, data) {
 	localStorage.setItem(`cachedPage_${pageIndex}`, JSON.stringify(entry));
 }
 
-function loadFromLocalStorage(page) {
+function savePageTotalToLocalStorage() {
+	const entry = {
+		timestamp: Date.now(),
+		data: totalPages,
+	};
+	localStorage.setItem(`cachedTotalPages`, JSON.stringify(entry))
+}
+
+function loadPageDataFromLocalStorage(page) {
 	const raw = localStorage.getItem(`cachedPage_${page}`);
 	if (!raw) {
 		return null;
 	}
 
 	const entry = JSON.parse(raw);
-	const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
+	const isExpired = Date.now() - entry.timestamp > COIN_CACHE_DURATION;
 
 	if (isExpired) {
 		localStorage.removeItem(`cachedPage_${page}`);
+		return null;
+	}
+	return entry.data;
+}
+
+function loadTotalPagesFromLocalStorage() {
+	const raw = localStorage.getItem(`cachedTotalPages`);
+	if (!raw) {
+		return null;
+	}
+
+	const entry = JSON.parse(raw)
+	const isExpired = Date.now() - entry.timeStamp > TOTAL_PAGES_CACHE_DURATION;
+
+	if (isExpired) {
+		localStorage.removeItem(`cachedTotalPages`);
 		return null;
 	}
 	return entry.data;
