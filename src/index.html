@@ -48,12 +48,19 @@
                 <tbody id="cryptoDataBody"></tbody>
             </table>
 
-            <div id="pageButtonsContainer" class="container">
+            <div id="pageButtonsContainer">
+                <div id="cryptoPageInfo">
+                    <p id="pageIndex">Showing 1 to 100 of 16039 results</p>
+                </div>
+
                 <div id="cryptoPageButtons">
                     <button id="prevBtn" class="button">Prev</button>
                     <button id="nextBtn" class="button">Next</button>
                 </div>
-                <p id="pageIndex">1 / 10</p>
+
+                <div id="cryptoPageInfo">
+                    <button id="returnToTop" class="button" onclick="setCurrentPage(1)">Return to top</button>
+                </div>
             </div>
         </div>
 

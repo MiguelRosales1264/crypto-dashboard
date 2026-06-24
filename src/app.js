@@ -75,6 +75,11 @@ async function setTotalPages() {
 	totalPages = Math.ceil(active_cryptocurrencies / perPage);
 }
 
+function setCurrentPage(page) {
+	currentPage = page;
+	updateCryptoData();
+}
+
 async function getCryptoData() {
 	const url = `${API_URL}/coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
@@ -121,7 +126,7 @@ function showLoading() {
 
 function showCryptoData() {
 	cryptoDataContainer.style.display = 'flex';
-	pageButtonsContainer.style.display = 'block';
+	pageButtonsContainer.style.display = 'flex';
 	resetUI();
 }
 
@@ -138,7 +143,7 @@ async function updatePageIndex() {
 	if (!totalPages) {
 		await setTotalPages();
 	}
-	pageIndex.textContent = `${currentPage} / ${totalPages}`;
+	pageIndex.textContent = `Showing ${perPage * (currentPage - 1) + 1} to ${perPage * currentPage} of ${totalPages}`;
 }
 
 function setContainerContent(container, content) {
@@ -159,7 +164,6 @@ async function updateCryptoData() {
 	}
 
 	try {
-		console.log('loading from API');
 		const response = await getCryptoData();
 		cachePageData(response);
 		renderCryptoData(response);
