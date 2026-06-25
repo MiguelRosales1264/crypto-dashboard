@@ -231,7 +231,7 @@ function loadTotalPagesFromLocalStorage() {
 	}
 
 	const entry = JSON.parse(raw)
-	const isExpired = Date.now() - entry.timeStamp > TOTAL_PAGES_CACHE_DURATION;
+	const isExpired = Date.now() - entry.timestamp > TOTAL_PAGES_CACHE_DURATION;
 
 	if (isExpired) {
 		localStorage.removeItem(`cachedTotalPages`);
