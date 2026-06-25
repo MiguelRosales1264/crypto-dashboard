@@ -42,9 +42,7 @@ const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
 // }
 
 logoHeader.addEventListener('click', showCryptoData);
-
 prevBtn.addEventListener('click', prevPage);
-
 nextBtn.addEventListener('click', nextPage);
 
 function prevPage() {
