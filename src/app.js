@@ -43,19 +43,23 @@ const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
 
 logoHeader.addEventListener('click', showCryptoData);
 
-prevBtn.addEventListener('click', () => {
-	currentPage = currentPage - 1;
-	if (currentPage < 1) {
-		currentPage = 1;
-		return;
-	}
-	updateCryptoData();
-});
+prevBtn.addEventListener('click', prevPage);
 
-nextBtn.addEventListener('click', () => {
+nextBtn.addEventListener('click', nextPage);
+
+function prevPage() {
+	currentPage = currentPage - 1; 
+	if (currentPage < 1) { 
+		currentPage = 1; 
+		return; 
+	} 
+	updateCryptoData();
+}
+
+function nextPage() {
 	currentPage = currentPage + 1;
 	updateCryptoData();
-});
+}
 
 async function getGlobalCryptoData() {
 	const url = `${API_URL}/global?x_cg_demo_api_key=${API_KEY}`;
