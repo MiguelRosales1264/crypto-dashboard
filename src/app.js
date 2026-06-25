@@ -104,7 +104,6 @@ async function getCryptoData() {
 }
 
 function showErrorMessage(error, message) {
-	console.error(error);
 	setContainerContent(
 		cryptoDataErrorDiv,
 		`<p class='errorMessage'>${message}</p>`,
