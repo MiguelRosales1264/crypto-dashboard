@@ -76,7 +76,6 @@ async function getCryptoData() {
 	const url = `${API_URL}/coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
 	try {
-		toggleLoading(true);
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
@@ -86,8 +85,6 @@ async function getCryptoData() {
 			'Oops! Something went wrong on our end.<br> Please come back later.',
 		);
 		return [];
-	} finally {
-		toggleLoading(false);
 	}
 }
 
@@ -104,6 +101,7 @@ function setCurrentPage(page) {
 }
 
 function showErrorMessage(error, message) {
+	cryptoDataErrorDiv.style.display = 'flex';
 	setContainerContent(
 		cryptoDataErrorDiv,
 		`<p class='errorMessage'>${message}</p>`,
@@ -119,26 +117,24 @@ function toggleLoading(isLoading) {
 }
 
 function showLoading() {
-	cryptoDataContainer.style.display = 'none';
+	cryptoDataTable.style.display = 'none';
 	pageButtonsContainer.style.display = 'none';
-	setContainerContent(
-		cryptoDataLoadingDiv,
-		'<p class="loadingStateText">Loading...</p>',
-	);
+	cryptoDataLoadingDiv.style.display = 'flex';
+	setContainerContent(cryptoDataLoadingDiv, '<p class="loadingStateText">Loading...</p>');
 }
 
 function showCryptoData() {
-	cryptoDataContainer.style.display = 'flex';
+	cryptoDataTable.style.display = '';
 	pageButtonsContainer.style.display = 'flex';
 	resetUI();
 }
 
 function resetUI() {
 	document.title = 'Crypto Dashboard';
-	cryptoDataContainer.style.display = 'flex';
-	setContainerContent(cryptoDataLoadingDiv, '');
-	setContainerContent(cryptoDataErrorDiv, '');
-	setContainerContent(coinPagesContainer, '');
+	cryptoDataTable.style.display = '';
+	cryptoDataLoadingDiv.style.display = 'none';
+	cryptoDataErrorDiv.style.display = 'none';
+	coinPagesContainer.style.display = 'none';
 	updatePageIndex();
 }
 
@@ -159,6 +155,7 @@ async function updateCryptoData() {
 	}
 
 	try {
+		toggleLoading(true);
 		const response = await getCryptoData();
 		cachePageData(response);
 		renderCryptoData(response);
@@ -168,6 +165,8 @@ async function updateCryptoData() {
 			error,
 			'Oops! Something went wrong.<br> Please come back later.',
 		);
+	} finally {
+		toggleLoading(false);
 	}
 }
 
@@ -270,8 +269,7 @@ function createCryptoInfoRow(crypto, index) {
 					<td class='crypto-index'>${index + 1 + 10 * (currentPage - 1)}</td>
 					<td class='crypto-details'>
 						<img src="${image}" alt="${name} logo" class="crypto-image">
-						<h2 class="crypto-name">${name}</h2>
-						<p class="crypto-id">${symbol.toUpperCase()}</p>
+						<h2 class="crypto-name">${name} <span class="crypto-id">${symbol.toUpperCase()}</span></h2>
 					</td>
 					<td class='crypto-price'>$${current_price.toLocaleString()}</td>
 					<td class='crypto-change price-change-24h'>${price_change_percentage_24h != null ? `${price_change_percentage_24h.toFixed(1)}%` : 'N/A'}</td>
