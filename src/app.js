@@ -72,18 +72,6 @@ async function getGlobalCryptoData() {
 	}
 }
 
-async function setTotalPages() {
-	const data = await getGlobalCryptoData();
-	const { active_cryptocurrencies } = data.data;
-	totalPages = Math.ceil(active_cryptocurrencies / perPage);
-	savePageTotalToLocalStorage()
-}
-
-function setCurrentPage(page) {
-	currentPage = page;
-	updateCryptoData();
-}
-
 async function getCryptoData() {
 	const url = `${API_URL}/coins/markets?vs_currency=${currency}&per_page=${perPage}&page=${currentPage}&price_change_percentage=${priceChangePercentage}&x_cg_demo_api_key=${API_KEY}`;
 
@@ -101,6 +89,18 @@ async function getCryptoData() {
 	} finally {
 		toggleLoading(false);
 	}
+}
+
+async function setTotalPages() {
+	const data = await getGlobalCryptoData();
+	const { active_cryptocurrencies } = data.data;
+	totalPages = Math.ceil(active_cryptocurrencies / perPage);
+	savePageTotalToLocalStorage()
+}
+
+function setCurrentPage(page) {
+	currentPage = page;
+	updateCryptoData();
 }
 
 function showErrorMessage(error, message) {
@@ -154,23 +154,7 @@ function setContainerContent(container, content) {
 }
 
 async function updateCryptoData() {
-	if (!totalPages) {
-		const storedTotalPages = loadTotalPagesFromLocalStorage();
-		if (storedTotalPages) {
-			console.log('loaded total pages from local storage')
-			totalPages = storedTotalPages;
-		}
-	}
-
-	if (pageCache[currentPage]) {
-		renderCryptoData(pageCache[currentPage]);
-		return;
-	}
-
-	const storedPageData = loadPageDataFromLocalStorage(currentPage);
-	if (storedPageData) {
-		cachePageData(storedPageData);
-		renderCryptoData(storedPageData);
+	if (checkCachedPageData()) {
 		return;
 	}
 
@@ -185,6 +169,28 @@ async function updateCryptoData() {
 			'Oops! Something went wrong.<br> Please come back later.',
 		);
 	}
+}
+
+function checkCachedPageData() {
+	if (!totalPages) {
+		const storedTotalPages = loadCachedDataFromLocalStorage();
+		if (storedTotalPages) {
+			totalPages = storedTotalPages;
+		}
+	}
+
+	if (pageCache[currentPage]) {
+		renderCryptoData(pageCache[currentPage]);
+		return true;
+	}
+
+	const storedPageData = loadCachedDataFromLocalStorage(currentPage);
+	if (storedPageData) {
+		cachePageData(storedPageData);
+		renderCryptoData(storedPageData);
+		return true;
+	}
+	return false;
 }
 
 function cachePageData(data) {
@@ -208,33 +214,17 @@ function savePageTotalToLocalStorage() {
 	localStorage.setItem(`cachedTotalPages`, JSON.stringify(entry))
 }
 
-function loadPageDataFromLocalStorage(page) {
-	const raw = localStorage.getItem(`cachedPage_${page}`);
-	if (!raw) {
+function loadCachedDataFromLocalStorage(page) {
+	const storedData = page ? localStorage.getItem(`cachedPage_${page}`) : localStorage.getItem(`cachedTotalPages`);
+	if (!storedData) {
 		return null;
 	}
 
-	const entry = JSON.parse(raw);
-	const isExpired = Date.now() - entry.timestamp > COIN_CACHE_DURATION;
+	const entry = JSON.parse(storedData);
+	const isExpired = Date.now() - entry.timestamp > (page ? COIN_CACHE_DURATION : TOTAL_PAGES_CACHE_DURATION);
 
 	if (isExpired) {
-		localStorage.removeItem(`cachedPage_${page}`);
-		return null;
-	}
-	return entry.data;
-}
-
-function loadTotalPagesFromLocalStorage() {
-	const raw = localStorage.getItem(`cachedTotalPages`);
-	if (!raw) {
-		return null;
-	}
-
-	const entry = JSON.parse(raw)
-	const isExpired = Date.now() - entry.timestamp > TOTAL_PAGES_CACHE_DURATION;
-
-	if (isExpired) {
-		localStorage.removeItem(`cachedTotalPages`);
+		localStorage.removeItem(page ? `cachedPage_${page}` : `cachedTotalPages`);
 		return null;
 	}
 	return entry.data;
