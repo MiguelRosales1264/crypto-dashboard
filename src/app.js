@@ -116,13 +116,6 @@ function toggleLoading(isLoading) {
 	}
 }
 
-function showLoading() {
-	cryptoDataTable.style.display = 'none';
-	pageButtonsContainer.style.display = 'none';
-	cryptoDataLoadingDiv.style.display = 'flex';
-	setContainerContent(cryptoDataLoadingDiv, '<p class="loadingStateText">Loading...</p>');
-}
-
 function showCryptoData() {
 	cryptoDataTable.style.display = '';
 	pageButtonsContainer.style.display = 'flex';
@@ -277,6 +270,41 @@ function createCryptoInfoRow(crypto, index) {
 	return infoRow;
 }
 
+function showLoading() {
+	cryptoDataTable.style.display = 'none';
+	pageButtonsContainer.style.display = 'none';
+	cryptoDataLoadingDiv.style.display = 'flex';
+	setContainerContent(
+		cryptoDataLoadingDiv,
+		`<div id='skeletonDataHeader' class='skeleton'>
+			<div id='skeletonHeaderRow' class='skeleton skeleton-header'>
+				<div class='skeleton'></div>
+				<div class='skeleton'></div>
+				<div class='skeleton'></div>
+				<div class='skeleton'></div>
+			</div>
+			<div class='skeleton skeleton-body'>
+				<div class='skeleton skeleton-row'></div>
+				<div class='skeleton skeleton-row'>
+					<div class'skeleton skeleton-avatar'></div>
+					<div class='skeleton skeleton-text'></div>
+				</div>
+				<div class='skeleton'></div>
+				<div class='skeleton'></div>
+			</div>
+		</div>`);
+}
+
+// <thead id="cryptoDataHeader">
+                //     <tr id="cryptoHeaderRow">
+                //         <th class="crypto-index">#</th>
+                //         <th class="crypto-name">Name</th>
+                //         <th class="crypto-price">Price</th>
+                //         <th class="crypto-change">24h</th>
+                //     </tr>
+                // </thead>
+                // <tbody id="cryptoDataBody"></tbody>
+
 function renderCoinPage(crypto, index) {
 	const { name } = crypto;
 	document.title = name;
@@ -319,4 +347,5 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-updateCryptoData();
+toggleLoading(true);
+// updateCryptoData();
