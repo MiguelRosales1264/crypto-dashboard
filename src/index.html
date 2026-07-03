@@ -31,11 +31,29 @@
     </header>
 
     <main id="mainContainer">
+        <div id="skeletonLoadingDiv" class="skeleton-table">
+                <div class="skeleton-header">
+                    <div class="skeleton-row">
+                        <div class="skeleton"></div>
+                        <div class="skeleton"></div>
+                        <div class="skeleton"></div>
+                        <div class="skeleton"></div>
+                    </div>
+                </div>
+                <div id="skeletonLoadingData" class="skeleton-body">
+                    <div class="skeleton"></div>
+                    <div class="">
+                        <div class="skeleton skeleton-image"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                </div>
+            </div>
         <div id="cryptoDataContainer">
-            <div id="cryptoDataLoadingDiv" style="display: none;"></div>
             <div id="cryptoDataErrorDiv" style="display: none;"></div>
 
-            <table id="cryptoDataTable">
+            <table id="cryptoDataTable" style="display: none;">
                 <thead id="cryptoDataHeader">
                     <tr id="cryptoHeaderRow">
                         <th class="crypto-index">#</th>
@@ -47,7 +65,7 @@
                 <tbody id="cryptoDataBody"></tbody>
             </table>
 
-            <div id="pageButtonsContainer">
+            <div id="pageButtonsContainer" style="display: none;">
                 <div id="cryptoPageInfo">
                     <p id="pageIndex">Showing 1 to 100 of 16039 results</p>
                 </div>

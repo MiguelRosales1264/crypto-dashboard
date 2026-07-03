@@ -6,7 +6,8 @@ const coinPagesContainer = document.getElementById('coinPagesContainer');
 const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
-const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
+const skeletonLoadingDiv = document.getElementById('skeletonLoadingDiv');
+const skeletonLoadingData = document.getElementById('skeletonLoadingData');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 const logoHeader = document.getElementById('logoHeader');
 const pageButtonsContainer = document.getElementById('pageButtonsContainer');
@@ -125,7 +126,7 @@ function showCryptoData() {
 function resetUI() {
 	document.title = 'Crypto Dashboard';
 	cryptoDataTable.style.display = '';
-	cryptoDataLoadingDiv.style.display = 'none';
+	skeletonLoadingData.style.display = 'none';
 	cryptoDataErrorDiv.style.display = 'none';
 	coinPagesContainer.style.display = 'none';
 	updatePageIndex();
@@ -273,37 +274,36 @@ function createCryptoInfoRow(crypto, index) {
 function showLoading() {
 	cryptoDataTable.style.display = 'none';
 	pageButtonsContainer.style.display = 'none';
-	cryptoDataLoadingDiv.style.display = 'flex';
+	skeletonLoadingDiv.style.display = 'flex';
 	setContainerContent(
-		cryptoDataLoadingDiv,
-		`<div id='skeletonDataHeader' class='skeleton'>
-			<div id='skeletonHeaderRow' class='skeleton skeleton-header'>
-				<div class='skeleton'></div>
-				<div class='skeleton'></div>
-				<div class='skeleton'></div>
-				<div class='skeleton'></div>
+		skeletonLoadingDiv,
+		`
+			<div class="skeleton-table">
+				<div class="skeleton skeleton-image"></div>
+				<div class="skeleton skeleton-text"></div>
 			</div>
-			<div class='skeleton skeleton-body'>
-				<div class='skeleton skeleton-row'></div>
-				<div class='skeleton skeleton-row'>
-					<div class'skeleton skeleton-avatar'></div>
-					<div class='skeleton skeleton-text'></div>
-				</div>
-				<div class='skeleton'></div>
-				<div class='skeleton'></div>
-			</div>
-		</div>`);
+		`);
 }
 
-// <thead id="cryptoDataHeader">
-                //     <tr id="cryptoHeaderRow">
-                //         <th class="crypto-index">#</th>
-                //         <th class="crypto-name">Name</th>
-                //         <th class="crypto-price">Price</th>
-                //         <th class="crypto-change">24h</th>
-                //     </tr>
-                // </thead>
-                // <tbody id="cryptoDataBody"></tbody>
+{/* 
+	<table id='skeletonDataHeader' class='skeleton'>
+		<thead id='skeletonHeaderRow' class='skeleton skeleton-header'>
+			<tr class='skeleton'></tr>
+			<tr class='skeleton'></tr>
+			<tr class='skeleton'></tr>
+			<tr class='skeleton'></tr>
+		</thead>
+		<tbody class='skeleton skeleton-body'>
+			<tr class='skeleton skeleton-row'></tr>
+			<tr class='skeleton skeleton-row'>
+				<td class='skeleton skeleton-avatar'></td>
+				<td class='skeleton skeleton-text'></td>
+			</tr>
+			<tr class='skeleton'></tr>
+			<tr class='skeleton'></tr>
+		</tbody>
+	</table> 
+*/}
 
 function renderCoinPage(crypto, index) {
 	const { name } = crypto;
@@ -347,5 +347,5 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-toggleLoading(true);
+// toggleLoading(true);
 // updateCryptoData();
