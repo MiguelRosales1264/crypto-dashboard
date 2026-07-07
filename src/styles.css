@@ -145,6 +145,7 @@ h6 {
 #mainContainer {
 	padding: 1rem 2rem;
 	margin: 0 auto;
+	height: 100vh;
 }
 
 /* CRYPTO DATA CONTAINER STYLING */
@@ -253,13 +254,29 @@ thead tr th {
 	gap: 1rem;
 	max-width: 1200px;
 	margin: 0 5.25rem;
+	height: 100%;
 }
 
-.skeleton-header-row, .skeleton-body {
+.skeleton-header {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.skeleton-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.skeleton-row {
 	display: grid;
 	grid-template-columns: 5% 45% 30% 20%;
 	align-items: center;
-	height: 1.5rem;
+	padding: 0.5rem 0;
+	min-height: 1.5rem;
+	row-gap: .5rem;
+	border-bottom: 1px solid lightgrey;
 }
 
 .skeleton-details {

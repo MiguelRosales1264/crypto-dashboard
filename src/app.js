@@ -275,38 +275,27 @@ function showLoading() {
 	cryptoDataTable.style.display = 'none';
 	pageButtonsContainer.style.display = 'none';
 	skeletonLoadingDiv.style.display = 'flex';
-	setContainerContent(
-		skeletonLoadingData,
-		`
-			<div class="skeleton skeleton-index"></div>
+
+	let skeletonBodyHTML = '';
+	for (let i = 0; i < perPage; i++) {
+		skeletonBodyHTML += `
+			<div class="skeleton-row">
+				<div class="skeleton skeleton-index"></div>
 				<div class="skeleton-details">
 					<div class="skeleton skeleton-image"></div>
 					<div class="skeleton skeleton-text"></div>
 				</div>
 				<div class="skeleton skeleton-text"></div>
-			<div class="skeleton skeleton-text"></div>
-		`);
-}
+				<div class="skeleton skeleton-text"></div>
+			</div>
+		`
+	}
 
-{/* 
-	<table id='skeletonDataHeader' class='skeleton'>
-		<thead id='skeletonHeaderRow' class='skeleton skeleton-header'>
-			<tr class='skeleton'></tr>
-			<tr class='skeleton'></tr>
-			<tr class='skeleton'></tr>
-			<tr class='skeleton'></tr>
-		</thead>
-		<tbody class='skeleton skeleton-body'>
-			<tr class='skeleton skeleton-row'></tr>
-			<tr class='skeleton skeleton-row'>
-				<td class='skeleton skeleton-avatar'></td>
-				<td class='skeleton skeleton-text'></td>
-			</tr>
-			<tr class='skeleton'></tr>
-			<tr class='skeleton'></tr>
-		</tbody>
-	</table> 
-*/}
+	setContainerContent(
+		skeletonLoadingData,
+		skeletonBodyHTML,
+	);
+}
 
 function renderCoinPage(crypto, index) {
 	const { name } = crypto;
@@ -350,5 +339,5 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-// toggleLoading(true);
+toggleLoading(true);
 // updateCryptoData();
