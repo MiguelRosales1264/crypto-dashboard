@@ -276,12 +276,15 @@ function showLoading() {
 	pageButtonsContainer.style.display = 'none';
 	skeletonLoadingDiv.style.display = 'flex';
 	setContainerContent(
-		skeletonLoadingDiv,
+		skeletonLoadingData,
 		`
-			<div class="skeleton-table">
-				<div class="skeleton skeleton-image"></div>
+			<div class="skeleton skeleton-index"></div>
+				<div class="skeleton-details">
+					<div class="skeleton skeleton-image"></div>
+					<div class="skeleton skeleton-text"></div>
+				</div>
 				<div class="skeleton skeleton-text"></div>
-			</div>
+			<div class="skeleton skeleton-text"></div>
 		`);
 }
 

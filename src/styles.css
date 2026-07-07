@@ -215,9 +215,7 @@ thead tr th {
 .crypto-image {
 	width: 24px;
 	height: 24px;
-	object-fit: cover;
 	border-radius: 50%;
-	margin-right: 1rem;
 	flex-shrink: 0;
 }
 
@@ -253,19 +251,49 @@ thead tr th {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	max-width: 1200px;
+	margin: 0 5.25rem;
 }
 
-.skeleton-row {
+.skeleton-header-row, .skeleton-body {
+	display: grid;
+	grid-template-columns: 5% 45% 30% 20%;
+	align-items: center;
+	height: 1.5rem;
+}
+
+.skeleton-details {
 	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .skeleton {
 	background-color: #e0e0e0;
 	width: 100%;
-	padding: 1rem;
+	height: 1rem;
 	border-radius: 4px;
 	overflow: hidden;
-	animation: shimmer 1s linear infinite alternate;
+}
+
+.skeleton-index {
+	width: 30%;
+}
+
+.skeleton-text {
+	width: 25%;
+}
+
+.skeleton-name {
+	width: 8%;
+}
+
+.skeleton-price {
+	width: 15%;
+}
+
+.skeleton-change {
+	width: 15%;
 }
 
 .skeleton-image {
@@ -273,15 +301,6 @@ thead tr th {
 	height: 24px;
 	border-radius: 50%;
 	flex-shrink: 0;
-}
-
-@keyframes shimmer {
-	0% { 
-		background-color: hsl(200, 20%, 70%),
-	}
-	100% {
-		background-color: hsl(200, 20%, 95%),
-	}
 }
 
 /* ERROR MESSAGE STYLING */
