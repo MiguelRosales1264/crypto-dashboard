@@ -126,7 +126,7 @@ function showCryptoData() {
 function resetUI() {
 	document.title = 'Crypto Dashboard';
 	cryptoDataTable.style.display = '';
-	skeletonLoadingData.style.display = 'none';
+	skeletonLoadingDiv.style.display = 'none';
 	cryptoDataErrorDiv.style.display = 'none';
 	coinPagesContainer.style.display = 'none';
 	updatePageIndex();
@@ -145,6 +145,7 @@ function setContainerContent(container, content) {
 
 async function updateCryptoData() {
 	if (checkCachedPageData()) {
+		toggleLoading(false);
 		return;
 	}
 
@@ -280,6 +281,7 @@ function showLoading() {
 	for (let i = 0; i < perPage; i++) {
 		skeletonBodyHTML += `
 			<div class="skeleton-row">
+				<div class="shimmer"></div>
 				<div class="skeleton skeleton-index"></div>
 				<div class="skeleton-details">
 					<div class="skeleton skeleton-image"></div>
@@ -339,5 +341,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-toggleLoading(true);
-// updateCryptoData();
+updateCryptoData();
