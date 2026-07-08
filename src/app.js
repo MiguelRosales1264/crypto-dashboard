@@ -9,7 +9,6 @@ const cryptoDataBody = document.getElementById('cryptoDataBody');
 const skeletonLoadingDiv = document.getElementById('skeletonLoadingDiv');
 const skeletonLoadingData = document.getElementById('skeletonLoadingData');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
-const logoHeader = document.getElementById('logoHeader');
 const pageButtonsContainer = document.getElementById('pageButtonsContainer');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -42,7 +41,6 @@ const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
 // 	}
 // }
 
-logoHeader.addEventListener('click', showCryptoData);
 prevBtn.addEventListener('click', prevPage);
 nextBtn.addEventListener('click', nextPage);
 
@@ -258,7 +256,9 @@ function createCryptoInfoRow(crypto, index) {
 	} = crypto;
 
 	const infoRow = document.createElement('tr');
-	infoRow.addEventListener('click', () => renderCoinPage(crypto, index));
+
+	// infoRow.addEventListener('click', () => renderCoinPage(crypto, index));
+
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
 					<td class='crypto-index'>${index + 1 + 10 * (currentPage - 1)}</td>
