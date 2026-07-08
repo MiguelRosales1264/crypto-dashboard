@@ -41,6 +41,15 @@ const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
 // 	}
 // }
 
+document.addEventListener('DOMContentLoaded', () => {
+	const rows = document.querySelectorAll('tr[data-href]');
+	rows.forEach((row) => {
+		row.addEventListener('click', () => {
+			window.location.href = row.dataset.href;
+		});
+	});
+});
+
 prevBtn.addEventListener('click', prevPage);
 nextBtn.addEventListener('click', nextPage);
 
@@ -255,6 +264,7 @@ function createCryptoInfoRow(crypto, index) {
 	} = crypto;
 
 	const infoRow = document.createElement('tr');
+	infoRow.setAttribute('data-href', `./coin.html?id=${id}`);
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
 					<td class='crypto-index'>${index + 1 + 10 * (currentPage - 1)}</td>
