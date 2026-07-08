@@ -126,7 +126,6 @@ function resetUI() {
 	cryptoDataTable.style.display = '';
 	skeletonLoadingDiv.style.display = 'none';
 	cryptoDataErrorDiv.style.display = 'none';
-	coinPagesContainer.style.display = 'none';
 	updatePageIndex();
 }
 
@@ -143,9 +142,7 @@ function setContainerContent(container, content) {
 
 async function updateCryptoData() {
 	if (checkCachedPageData()) {
-		if (skeletonLoadingDiv.style.display === '') {
-			skeletonLoadingDiv.style.display = 'none';
-		}
+		toggleLoading(false);
 		return;
 	}
 
@@ -258,9 +255,6 @@ function createCryptoInfoRow(crypto, index) {
 	} = crypto;
 
 	const infoRow = document.createElement('tr');
-
-	// infoRow.addEventListener('click', () => renderCoinPage(crypto, index));
-
 	infoRow.classList.add('crypto-info');
 	infoRow.innerHTML = `
 					<td class='crypto-index'>${index + 1 + 10 * (currentPage - 1)}</td>
@@ -299,36 +293,6 @@ function showLoading() {
 		skeletonLoadingData,
 		skeletonBodyHTML,
 	);
-}
-
-function renderCoinPage(crypto, index) {
-	const { name } = crypto;
-	document.title = name;
-	createCoinPageHTML(crypto, index);
-}
-
-function createCoinPageHTML(crypto, index) {
-	const {
-		id,
-		symbol,
-		name,
-		image,
-		current_price,
-		price_change_percentage_24h,
-	} = crypto;
-
-	cryptoDataContainer.style.display = 'none';
-	coinPagesContainer.style.display = 'block';
-	coinPagesContainer.innerHTML = `
-		<div class="coin-page-header">
-			<img src="${image}" alt="${name} logo" class="crypto-image">
-			<h1>${name} ${symbol.toUpperCase()} Price ${index + 1}</h1>
-		</div>
-		<h1>$${current_price.toLocaleString()}</h1>
-		<p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}% (24h)</p>
-	`;
-
-	updatePriceChangeColor(price_change_percentage_24h, coinPagesContainer);
 }
 
 function updatePriceChangeColor(priceChange, container) {
