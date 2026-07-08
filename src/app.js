@@ -143,7 +143,9 @@ function setContainerContent(container, content) {
 
 async function updateCryptoData() {
 	if (checkCachedPageData()) {
-		toggleLoading(false);
+		if (skeletonLoadingDiv.style.display === 'flex') {
+			toggleLoading(false);
+		}
 		return;
 	}
 
