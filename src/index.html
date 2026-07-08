@@ -31,9 +31,23 @@
     </header>
 
     <main id="mainContainer">
+        <div id="skeletonLoadingDiv" class="skeleton-table">
+            <div class="skeleton-header">
+                <div class="skeleton-row">
+                    <div class="shimmer"></div>
+                    <div class="skeleton skeleton-index"></div>
+                    <div class="skeleton skeleton-name"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-change"></div>
+                </div>
+            </div>
+            <div id="skeletonLoadingData" class="skeleton-body">
+            </div>
+        </div>
+            
+        <div id="cryptoDataErrorDiv" style="display: none;"></div>
+        
         <div id="cryptoDataContainer">
-            <div id="cryptoDataLoadingDiv" style="display: none;"></div>
-            <div id="cryptoDataErrorDiv" style="display: none;"></div>
 
             <table id="cryptoDataTable">
                 <thead id="cryptoDataHeader">

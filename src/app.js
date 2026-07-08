@@ -6,7 +6,8 @@ const coinPagesContainer = document.getElementById('coinPagesContainer');
 const cryptoDataTable = document.getElementById('cryptoDataTable');
 const cryptoDataHeader = document.getElementById('cryptoDataHeader');
 const cryptoDataBody = document.getElementById('cryptoDataBody');
-const cryptoDataLoadingDiv = document.getElementById('cryptoDataLoadingDiv');
+const skeletonLoadingDiv = document.getElementById('skeletonLoadingDiv');
+const skeletonLoadingData = document.getElementById('skeletonLoadingData');
 const cryptoDataErrorDiv = document.getElementById('cryptoDataErrorDiv');
 const logoHeader = document.getElementById('logoHeader');
 const pageButtonsContainer = document.getElementById('pageButtonsContainer');
@@ -116,13 +117,6 @@ function toggleLoading(isLoading) {
 	}
 }
 
-function showLoading() {
-	cryptoDataTable.style.display = 'none';
-	pageButtonsContainer.style.display = 'none';
-	cryptoDataLoadingDiv.style.display = 'flex';
-	setContainerContent(cryptoDataLoadingDiv, '<p class="loadingStateText">Loading...</p>');
-}
-
 function showCryptoData() {
 	cryptoDataTable.style.display = '';
 	pageButtonsContainer.style.display = 'flex';
@@ -132,7 +126,7 @@ function showCryptoData() {
 function resetUI() {
 	document.title = 'Crypto Dashboard';
 	cryptoDataTable.style.display = '';
-	cryptoDataLoadingDiv.style.display = 'none';
+	skeletonLoadingDiv.style.display = 'none';
 	cryptoDataErrorDiv.style.display = 'none';
 	coinPagesContainer.style.display = 'none';
 	updatePageIndex();
@@ -151,6 +145,7 @@ function setContainerContent(container, content) {
 
 async function updateCryptoData() {
 	if (checkCachedPageData()) {
+		toggleLoading(false);
 		return;
 	}
 
@@ -275,6 +270,33 @@ function createCryptoInfoRow(crypto, index) {
 					<td class='crypto-change price-change-24h'>${price_change_percentage_24h != null ? `${price_change_percentage_24h.toFixed(1)}%` : 'N/A'}</td>
 				`;
 	return infoRow;
+}
+
+function showLoading() {
+	cryptoDataTable.style.display = 'none';
+	pageButtonsContainer.style.display = 'none';
+	skeletonLoadingDiv.style.display = 'flex';
+
+	let skeletonBodyHTML = '';
+	for (let i = 0; i < perPage; i++) {
+		skeletonBodyHTML += `
+			<div class="skeleton-row">
+				<div class="shimmer"></div>
+				<div class="skeleton skeleton-index"></div>
+				<div class="skeleton-details">
+					<div class="skeleton skeleton-image"></div>
+					<div class="skeleton skeleton-text"></div>
+				</div>
+				<div class="skeleton skeleton-text"></div>
+				<div class="skeleton skeleton-text"></div>
+			</div>
+		`
+	}
+
+	setContainerContent(
+		skeletonLoadingData,
+		skeletonBodyHTML,
+	);
 }
 
 function renderCoinPage(crypto, index) {
