@@ -280,7 +280,6 @@ function createCryptoInfoRow(crypto, index) {
 
 function showLoading() {
 	cryptoDataTable.style.display = 'none';
-	pageButtonsContainer.style.display = 'none';
 	skeletonLoadingDiv.style.display = 'flex';
 
 	let skeletonBodyHTML = '';
@@ -317,4 +316,5 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
+toggleLoading(true);
 updateCryptoData();
