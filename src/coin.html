@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Page</title>
     <link rel="stylesheet" href="./styles.css">
-    <!-- <script src="./app.js" defer></script> -->
+    <script src="./coin.js" defer></script>
 </head>
+
 <body>
     <header id="headerContainer">
         <div id="header">
@@ -23,23 +25,24 @@
                     <small>Seconds</small>
                 </div>
             </div>
-            
+
             <div id="searchDiv">
                 <input type="text" id="searchInput" placeholder="Search">
                 <button id="searchButton">🔍</button>
             </div>
         </div>
     </header>
-    
+
     <main id="mainContainer">
         <div id="coinPagesContainer">
             <div class="coin-page-header">
-                <img src="${image}" alt="${name} logo" class="crypto-image">
-                <h1>${name} ${symbol.toUpperCase()} Price ${index + 1}</h1>
+                <img id="coinImage" src="" alt="" class="crypto-image">
+                <h1 id="coinName"></h1>
             </div>
-            <h1>$${current_price.toLocaleString()}</h1>
-            <p class='crypto-change price-change-24h'>${price_change_percentage_24h.toFixed(1)}% (24h)</p>
+            <h1 id="coinPrice"></h1>
+            <p id="coinChange" class='crypto-change price-change-24h'></p>
         </div>
     </main>
 </body>
+
 </html>
