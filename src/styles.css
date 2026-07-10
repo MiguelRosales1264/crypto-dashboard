@@ -251,9 +251,10 @@ thead tr th, tbody tr td {
 	color: gray; 
 }
 
-#cryptoPageInfo button,
-#cryptoPageButtons button {
-	margin: 0.5rem 0;
+#cryptoPageButtons {
+	display: flex;
+	align-items: center;
+	gap: 1em;
 }
 
 #pageButtonsContainer {
@@ -261,7 +262,7 @@ thead tr th, tbody tr td {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 1rem;
+	margin-top: 1.5rem;
 }
 
 

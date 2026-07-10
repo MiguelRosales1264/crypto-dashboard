@@ -18,13 +18,14 @@ const priceChangePercentage = '1h,24h,7d';
 const currency = 'usd';
 const perPage = 10;
 let currentPage = 1;
+const currentPageDiv = document.getElementById('currentPage');
 let totalPages;
 const pageCache = {};
-let refreshTimeout;
-const TIMER_DURATION = 60 * 1000;
 const COIN_CACHE_DURATION = 60 * 1000;
 const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
+let refreshTimeout;
 let countdownInterval;
+const TIMER_DURATION = 60 * 1000;
 let timeLeft = TIMER_DURATION / 1000;
 
 function updateTimer() {
@@ -34,9 +35,9 @@ function updateTimer() {
 
 	countdownSeconds.textContent = `${formattedSeconds}`;
 
-	if (timeLeft <= 0) {
+	if (timeLeft < 0) {
 		clearInterval(countdownInterval);
-		countdownSeconds.textContent = '00';
+		countdownSeconds.textContent = '60';
 	}
 }
 
@@ -131,6 +132,11 @@ function resetUI() {
 	skeletonLoadingDiv.style.display = 'none';
 	cryptoDataErrorDiv.style.display = 'none';
 	updatePageIndex();
+	updateCurrentPage();
+}
+
+function updateCurrentPage() {
+	currentPageDiv.textContent = `Page ${currentPage}`;
 }
 
 async function updatePageIndex() {
@@ -233,6 +239,7 @@ function renderCryptoData(response) {
 		cryptoDataBody.appendChild(cryptoInfoRow);
 	});
 	updatePageIndex();
+	updateCurrentPage()
 }
 
 function resetCryptoTimer() {
