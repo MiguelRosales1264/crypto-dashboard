@@ -24,41 +24,36 @@ let refreshTimeout;
 const TIMER_DURATION = 60 * 1000;
 const COIN_CACHE_DURATION = 60 * 1000;
 const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
-// let countdownInterval = setInterval(updateTimer, 1000);
-// let timeLeft = TIMER_DURATION / 1000;
+let countdownInterval;
+let timeLeft = TIMER_DURATION / 1000;
 
-// function updateTimer() {
-// 	timeLeft--;
-// 	const seconds = timeLeft % 60;
-// 	const formattedSeconds = String(seconds).padStart(2, '0');
+function updateTimer() {
+	timeLeft--;
+	const seconds = timeLeft % 60;
+	const formattedSeconds = String(seconds).padStart(2, '0');
 
-// 	countdownSeconds.textContent = `${formattedSeconds}`;
+	countdownSeconds.textContent = `${formattedSeconds}`;
 
-// 	if (timeLeft <= 0) {
-// 		clearInterval(countdownInterval);
-// 		countdownSeconds.textContent = '00';
-// 		console.log("Time's up!");
-// 	}
-// }
+	if (timeLeft <= 0) {
+		clearInterval(countdownInterval);
+		countdownSeconds.textContent = '00';
+	}
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-	const rows = document.querySelectorAll('tr[data-href]');
-	rows.forEach((row) => {
-		row.addEventListener('click', () => {
-			window.location.href = row.dataset.href;
-		});
-	});
+cryptoDataBody.addEventListener('click', (e) => {
+	const row = e.target.closest('tr[data-href]');
+	if (row) window.location.href = row.dataset.href;
 });
 
 prevBtn.addEventListener('click', prevPage);
 nextBtn.addEventListener('click', nextPage);
 
 function prevPage() {
-	currentPage = currentPage - 1; 
-	if (currentPage < 1) { 
-		currentPage = 1; 
-		return; 
-	} 
+	currentPage = currentPage - 1;
+	if (currentPage < 1) {
+		currentPage = 1;
+		return;
+	}
 	updateCryptoData();
 }
 
@@ -242,6 +237,9 @@ function renderCryptoData(response) {
 function resetCryptoTimer() {
 	clearTimeout(refreshTimeout);
 	refreshTimeout = setTimeout(updateCryptoData, TIMER_DURATION);
+	clearInterval(countdownInterval);
+	timeLeft = TIMER_DURATION / 1000;
+	countdownInterval = setInterval(updateTimer, 1000);
 }
 
 function getCryptoInfoRow(crypto, index) {

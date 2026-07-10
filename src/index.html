@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
 </head>
+
 <body>
     <header id="headerContainer">
         <div id="header">
@@ -24,7 +26,7 @@
                     <small>Seconds</small>
                 </div>
             </div>
-            
+
             <div id="searchDiv">
                 <input type="text" id="searchInput" placeholder="Search">
                 <button id="searchButton">🔍</button>
@@ -46,9 +48,9 @@
             <div id="skeletonLoadingData" class="skeleton-body">
             </div>
         </div>
-            
+
         <div id="cryptoDataErrorDiv" style="display: none;"></div>
-        
+
         <div id="cryptoDataContainer">
 
             <table id="cryptoDataTable">
@@ -73,11 +75,12 @@
                     <button id="nextBtn" class="button">Next</button>
                 </div>
 
-                <div id="cryptoPageInfo">
+                <div id="cryptoReturnToTop">
                     <button id="returnToTop" class="button" onclick="setCurrentPage(1)">Return to top</button>
                 </div>
             </div>
         </div>
     </main>
 </body>
+
 </html>
