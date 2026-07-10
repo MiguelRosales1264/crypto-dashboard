@@ -180,6 +180,7 @@ function checkCachedPageData() {
 	}
 
 	if (pageCache[currentPage]) {
+		console.log(`current page, ${currentPage} loaded: ${pageCache[currentPage]}`)
 		renderCryptoData(pageCache[currentPage]);
 		return true;
 	}
@@ -316,5 +317,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-toggleLoading(true);
 updateCryptoData();
