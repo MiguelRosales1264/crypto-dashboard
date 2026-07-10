@@ -386,7 +386,8 @@ thead tr th, tbody tr td {
 	text-align: left;
 	margin: 1rem 2rem;
 	place-items: center;
-	min-height: 100vh;
+	gap: 1.5em;
+	/* min-height: 100vh; */
 }
 
 .coin-page-header {
@@ -394,4 +395,8 @@ thead tr th, tbody tr td {
 	align-items: center;
 	gap: 1rem;
 	margin: 0 auto;
+}
+
+#coinChange {
+	width: auto;
 }
