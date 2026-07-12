@@ -40,12 +40,12 @@ function prevPage() {
 		currentPage = 1;
 		return;
 	}
-	updateCryptoData();
+	renderCryptoData();
 }
 
 function nextPage() {
 	currentPage = currentPage + 1;
-	updateCryptoData();
+	renderCryptoData();
 }
 
 async function getGlobalCryptoData() {
@@ -86,7 +86,7 @@ async function setTotalPages() {
 
 function setCurrentPage(page) {
 	currentPage = page;
-	updateCryptoData();
+	renderCryptoData();
 }
 
 function showErrorMessage(error, message) {
@@ -135,7 +135,7 @@ function setContainerContent(container, content) {
 	container.innerHTML = content;
 }
 
-async function updateCryptoData() {
+async function renderCryptoData() {
 	if (checkCachedPageData()) {
 		toggleLoading(false);
 		resetCryptoTimer();
@@ -230,7 +230,7 @@ function renderCryptoData(response) {
 
 function resetCryptoTimer() {
 	clearTimeout(refreshTimeout);
-	refreshTimeout = setTimeout(updateCryptoData, TIMER_DURATION);
+	refreshTimeout = setTimeout(renderCryptoData, TIMER_DURATION);
 }
 
 function getCryptoInfoRow(crypto, index) {
@@ -305,4 +305,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-updateCryptoData();
+renderCryptoData();
