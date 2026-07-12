@@ -24,22 +24,7 @@ const pageCache = {};
 const COIN_CACHE_DURATION = 60 * 1000;
 const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
 let refreshTimeout;
-let countdownInterval;
 const TIMER_DURATION = 60 * 1000;
-let timeLeft = TIMER_DURATION / 1000;
-
-function updateTimer() {
-	timeLeft--;
-	const seconds = timeLeft % 60;
-	const formattedSeconds = String(seconds).padStart(2, '0');
-
-	countdownSeconds.textContent = `${formattedSeconds}`;
-
-	if (timeLeft < 0) {
-		clearInterval(countdownInterval);
-		countdownSeconds.textContent = '60';
-	}
-}
 
 cryptoDataBody.addEventListener('click', (e) => {
 	const row = e.target.closest('tr[data-href]');
@@ -153,6 +138,7 @@ function setContainerContent(container, content) {
 async function updateCryptoData() {
 	if (checkCachedPageData()) {
 		toggleLoading(false);
+		resetCryptoTimer();
 		return;
 	}
 
@@ -245,9 +231,6 @@ function renderCryptoData(response) {
 function resetCryptoTimer() {
 	clearTimeout(refreshTimeout);
 	refreshTimeout = setTimeout(updateCryptoData, TIMER_DURATION);
-	clearInterval(countdownInterval);
-	timeLeft = TIMER_DURATION / 1000;
-	countdownInterval = setInterval(updateTimer, 1000);
 }
 
 function getCryptoInfoRow(crypto, index) {
