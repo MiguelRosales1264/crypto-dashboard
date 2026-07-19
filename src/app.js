@@ -14,38 +14,42 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const pageIndex = document.getElementById('pageIndex');
 const countdownSeconds = document.getElementById('countdownSeconds');
+const currentPageDiv = document.getElementById('currentPage');
+
 const priceChangePercentage = '1h,24h,7d';
 const currency = 'usd';
 const perPage = 10;
-let currentPage = 1;
-const currentPageDiv = document.getElementById('currentPage');
-let totalPages;
-const pageCache = {};
+
 const COIN_CACHE_DURATION = 60 * 1000;
 const TOTAL_PAGES_CACHE_DURATION = 24 * 60 * 60 * 1000;
-let refreshTimeout;
 const TIMER_DURATION = 60 * 1000;
+
+let currentPage = 1;
+let totalPages;
+const pageCache = {};
+
+let nextRefreshAt = null;
+let tickHandle = null;
+let isRefreshing = false;
+
+prevBtn.addEventListener('click', prevPage);
+nextBtn.addEventListener('click', nextPage);
 
 cryptoDataBody.addEventListener('click', (e) => {
 	const row = e.target.closest('tr[data-href]');
 	if (row) window.location.href = row.dataset.href;
 });
 
-prevBtn.addEventListener('click', prevPage);
-nextBtn.addEventListener('click', nextPage);
 
 function prevPage() {
-	currentPage = currentPage - 1;
-	if (currentPage < 1) {
-		currentPage = 1;
-		return;
-	}
-	renderCryptoData();
+	if (currentPage <= 1) { return; }
+	currentPage -= - 1;
+	renderPage(currentPage);
 }
 
 function nextPage() {
-	currentPage = currentPage + 1;
-	renderCryptoData();
+	currentPage += 1;
+	renderPage(currentPage);
 }
 
 async function getGlobalCryptoData() {
@@ -86,7 +90,7 @@ async function setTotalPages() {
 
 function setCurrentPage(page) {
 	currentPage = page;
-	renderCryptoData();
+	renderPage();
 }
 
 function showErrorMessage(error, message) {
@@ -135,10 +139,25 @@ function setContainerContent(container, content) {
 	container.innerHTML = content;
 }
 
-async function renderCryptoData() {
+async function updateCryptoData() {
+	renderPage();
+	refreshCycle();
+}
+
+
+function renderCryptoData(response) {
+	cryptoDataBody.innerHTML = '';
+	response.forEach((crypto, index) => {
+		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
+		cryptoDataBody.appendChild(cryptoInfoRow);
+	});
+	updatePageIndex();
+	updateCurrentPage()
+}
+
+async function renderPage() {
 	if (checkCachedPageData()) {
 		toggleLoading(false);
-		resetCryptoTimer();
 		return;
 	}
 
@@ -147,7 +166,6 @@ async function renderCryptoData() {
 		const response = await getCryptoData();
 		cachePageData(response);
 		renderCryptoData(response);
-		resetCryptoTimer();
 	} catch (error) {
 		showErrorMessage(
 			error,
@@ -156,6 +174,18 @@ async function renderCryptoData() {
 	} finally {
 		toggleLoading(false);
 	}
+}
+
+function refreshCycle() {
+	console.log('refreshCycle');
+}
+
+function tick() {
+	console.log('tick');
+}
+
+function startRefreshCycle() {
+	console.log('startRefreshCycle');
 }
 
 function checkCachedPageData() {
@@ -174,6 +204,7 @@ function checkCachedPageData() {
 
 	const storedPageData = loadCachedDataFromLocalStorage(currentPage);
 	if (storedPageData) {
+		console.log(`current page, ${currentPage} stored data: ${storedPageData}`)
 		cachePageData(storedPageData);
 		renderCryptoData(storedPageData);
 		return true;
@@ -216,21 +247,6 @@ function loadCachedDataFromLocalStorage(page) {
 		return null;
 	}
 	return entry.data;
-}
-
-function renderCryptoData(response) {
-	cryptoDataBody.innerHTML = '';
-	response.forEach((crypto, index) => {
-		const cryptoInfoRow = getCryptoInfoRow(crypto, index);
-		cryptoDataBody.appendChild(cryptoInfoRow);
-	});
-	updatePageIndex();
-	updateCurrentPage()
-}
-
-function resetCryptoTimer() {
-	clearTimeout(refreshTimeout);
-	refreshTimeout = setTimeout(renderCryptoData, TIMER_DURATION);
 }
 
 function getCryptoInfoRow(crypto, index) {
@@ -305,4 +321,4 @@ function updatePriceChangeColor(priceChange, container) {
 	}
 }
 
-renderCryptoData();
+updateCryptoData();
